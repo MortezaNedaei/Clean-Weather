@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
 
@@ -74,7 +75,7 @@ dependencies {
 
     //region Dependency Injection
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    ksp("com.google.dagger:hilt-compiler:$hiltVersion")
+    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
     //endregion
 
     //region Navigation

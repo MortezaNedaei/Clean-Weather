@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--    Material Design 3 Colors-->
+    <color name="colorPrimaryLight">#0F1045</color>
+    <color name="colorPrimaryDark">#6C66CE</color>
+    <color name="colorPrimaryVariantLight">#6C66CE</color>
+    <color name="colorPrimaryVariantDark">#0F1045</color>
+    <color name="colorOnPrimaryLight">#1B1A1B</color>
+    <color name="colorOnPrimaryDark">#E1D8E1</color>
+    <color name="colorSecondaryLight">#FF5C2E</color>
+    <color name="colorSecondaryDark">#FF5C2E</color>
+    <color name="colorSecondaryVariantLight">#ff0700</color>
+    <color name="colorSecondaryVariantDark">#ff0700</color>
+    <color name="colorOnSecondaryLight">#FFDB69</color>
+    <color name="colorOnSecondaryDark">#FFDB69</color>
+
+    <color name="statusBarColorLight">@color/colorPrimaryLight</color>
+    <color name="statusBarColorDark">@color/colorPrimaryDark</color>
+
+    <color name="transparent">@android:color/transparent</color>
+
+    <color name="textColorPrimaryLight">#3f3c3f</color>
+    <color name="textColorPrimaryDark">#bcbdc0</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
 </resources>

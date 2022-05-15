@@ -8,18 +8,16 @@ import androidx.fragment.app.Fragment
 import com.mooncascade.R
 import com.mooncascade.common.extensions.contexts.navigateTo
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
+import com.mooncascade.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 @AndroidEntryPoint
-class PlaceDetailsFragment : Fragment() {
+class PlaceDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentPlaceDetailsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -36,7 +34,7 @@ class PlaceDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
-            navigateTo(R.id.action_SecondFragment_to_FirstFragment)
+            navigateTo(R.id.action_PlaceDetailsFragment_to_HomeFragment)
         }
     }
 

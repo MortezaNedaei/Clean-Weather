@@ -2,7 +2,7 @@
     <string name="app_name">Estonian-Weather-Forcast</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="main_fragment_label">Home Screen</string>
+    <string name="main_fragment_label">Home</string>
     <string name="place_details_fragment_label">Place Details</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -44,4 +44,10 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string name="fab_date">Select Data button</string>
+
+
+    <string name="example_temperature">20°</string>
+    <string name="example_weather_status">Rainy</string>
 </resources>

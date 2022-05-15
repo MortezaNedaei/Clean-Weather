@@ -1,10 +1,33 @@
 ## Description
 
-## Libraries and Tools
+This is a weather forecast based on the modern Android development tools
 
-- Kotlin 1.7-Beta
+### Libraries and Tools
+
+- **Kotlin 1.7-Beta**
 - Android Studio Electric Canary 3
-- Context Receivers
-- KSP (Kotlin Symbol Processing): is a library for processing Kotlin source files.
+- Clean Architecture
+- Dagger Hilt
+- Retrofit
+- Coroutines (**RepeatOnLifeCycle API**)
+- Coil
+- **Context Receivers**
+- **KSP (Kotlin Symbol Processing)**: is a library for processing Kotlin source files.
+
+### Notes
+
+- there are some PBIs (Product-Backlog-Item) in the Backlog section that could be implemented in the
+  future
+
+### Backlog
+
+- Room
+- MotionLayout
 - UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
-- MultiLanguage: English, Estonian
+- SharedElement Transition
+- [Paging](https://developer.android.com/jetpack/androidx/releases/paging)
+- MultiModule
+- DatePicker
+- MultiLanguage
+- MultiTheme
+- Network Check

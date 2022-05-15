@@ -1,6 +1,6 @@
 ## Description
 
-This is a weather forecast based on the modern Android development tools
+This is a weather forecast application based on the modern Android development tools
 
 ### Libraries and Tools
 
@@ -10,6 +10,7 @@ This is a weather forecast based on the modern Android development tools
 - Dagger Hilt
 - Retrofit
 - Coroutines (**RepeatOnLifeCycle API**)
+- Material Design
 - Coil
 - **Context Receivers**
 - **KSP (Kotlin Symbol Processing)**: is a library for processing Kotlin source files.
@@ -24,6 +25,7 @@ This is a weather forecast based on the modern Android development tools
 - Room
 - MotionLayout
 - UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
+- MultiThreading (Coroutines ThreadPoolExecutor)
 - SharedElement Transition
 - [Paging](https://developer.android.com/jetpack/androidx/releases/paging)
 - MultiModule

@@ -28,4 +28,7 @@
     <dimen name="radius_small">@dimen/_8sdp</dimen>
     <dimen name="radius_medium">@dimen/_24sdp</dimen>
 
+    <!--elevation-->
+    <dimen name="elevation_small">@dimen/_2sdp</dimen>
+
 </resources>

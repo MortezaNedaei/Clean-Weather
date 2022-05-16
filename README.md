@@ -35,6 +35,7 @@ You can find it [Here](TASK.md)
 
 ### Backlog
 
+- Github CI
 - Jetpack Compose Version
 - Room
 - MotionLayout

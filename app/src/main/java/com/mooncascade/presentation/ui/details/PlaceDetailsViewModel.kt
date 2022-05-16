@@ -2,7 +2,7 @@ package com.mooncascade.presentation.ui.details
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.mooncascade.data.entity.ForecastEntity
+import com.mooncascade.data.entity.forecast.ForecastEntity
 import com.mooncascade.data.respository.WeatherDataRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

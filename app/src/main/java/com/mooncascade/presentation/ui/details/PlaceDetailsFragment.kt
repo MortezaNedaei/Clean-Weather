@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.mooncascade.R
-import com.mooncascade.common.extensions.contexts.navigateTo
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
 import com.mooncascade.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +21,7 @@ class PlaceDetailsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentPlaceDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,9 +31,6 @@ class PlaceDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            navigateTo(R.id.action_PlaceDetailsFragment_to_HomeFragment)
-        }
     }
 
     override fun onDestroyView() {

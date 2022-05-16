@@ -1,11 +1,11 @@
-package com.mooncascade.data.entity
+package com.mooncascade.data.entity.forecast
 
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class ForecastDataEntity(
+data class NextDaysForecastEntity(
     @SerializedName("forecasts")
     val forecasts: List<ForecastEntity>?,
 )

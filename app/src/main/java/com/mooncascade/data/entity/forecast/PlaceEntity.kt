@@ -1,4 +1,4 @@
-package com.mooncascade.data.entity
+package com.mooncascade.data.entity.forecast
 
 
 import androidx.annotation.Keep

@@ -185,7 +185,8 @@ class HomeFragment : BaseFragment() {
 
     private fun initClicks() {
         binding.fabDate.setOnClickListener {
-            navigateTo(R.id.action_HomeFragment_to_PlaceDetailsFragment)
+            // TODO: create additional dialog fragment to show date picker
+            requireView().snack("will be implemented soon")
         }
 
         binding.tvPlacesViewMore.setOnClickListener {

@@ -16,6 +16,7 @@ You can find it [Here](TASK.md)
 - MVVM
 - First Offline Cache
 - Dagger Hilt
+- Github CI
 - Retrofit
 - Coroutines (**RepeatOnLifeCycle API**)
 - Material Design
@@ -35,7 +36,6 @@ You can find it [Here](TASK.md)
 
 ### Backlog
 
-- Github CI
 - Jetpack Compose Version
 - Room
 - MotionLayout

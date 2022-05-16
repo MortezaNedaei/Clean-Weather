@@ -24,7 +24,7 @@
     <!--    String Formatters-->
     <string name="format_temp">%s°</string>
     <string name="format_air_temperature">Temperature: %s°</string>
-    <string name="format_humidity">Humidity: %s\%%</string>
+    <string name="format_humidity">Humidity: %s%%</string>
     <string name="format_visibility">Visibility: %s km</string>
     <string name="format_min_temp">Min: %s°</string>
     <string name="format_max_temp">Max: %s°</string>

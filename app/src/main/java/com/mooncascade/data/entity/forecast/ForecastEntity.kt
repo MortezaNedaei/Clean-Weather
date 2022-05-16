@@ -1,4 +1,4 @@
-package com.mooncascade.data.entity
+package com.mooncascade.data.entity.forecast
 
 
 import androidx.annotation.Keep
@@ -9,7 +9,7 @@ data class ForecastEntity(
     @SerializedName("date")
     val date: String?,
     @SerializedName("day")
-    val day: DayEntity?,
+    val day: DayNightEntity?,
     @SerializedName("night")
-    val night: NightEntity?
+    val night: DayNightEntity?
 )

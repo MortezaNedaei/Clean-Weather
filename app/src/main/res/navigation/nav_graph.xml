@@ -13,13 +13,23 @@
 
         <action
             android:id="@+id/action_HomeFragment_to_PlaceDetailsFragment"
-            app:destination="@id/PlaceDetailsFragment" />
+            app:destination="@id/PlaceDetailsFragment">
+            <argument
+                android:name="placeId"
+                app:argType="string"
+                app:nullable="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/PlaceDetailsFragment"
         android:name="com.mooncascade.presentation.ui.details.PlaceDetailsFragment"
         android:label="@string/place_details_fragment_label"
         tools:layout="@layout/fragment_place_details">
+
+        <argument
+            android:name="@string/arg_place_name"
+            app:argType="string"
+            app:nullable="false" />
 
         <action
             android:id="@+id/action_PlaceDetailsFragment_to_HomeFragment"

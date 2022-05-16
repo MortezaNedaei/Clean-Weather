@@ -1,11 +1,11 @@
-package com.mooncascade.data.entity
+package com.mooncascade.data.entity.forecast
 
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class NightEntity(
+data class DayNightEntity(
     @SerializedName("peipsi")
     val peipsi: String?,
     @SerializedName("phenomenon")

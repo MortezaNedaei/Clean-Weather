@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.airbnb.lottie.LottieAnimationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progress_bar"
+    android:layout_width="@dimen/_64sdp"
+    android:layout_height="@dimen/_64sdp"
+    android:layout_gravity="center"
+    android:elevation="@dimen/elevation_small"
+    android:visibility="gone"
+    app:lottie_autoPlay="true"
+    app:lottie_cacheComposition="true"
+    app:lottie_colorFilter="@color/colorSecondaryLight"
+    app:lottie_loop="true"
+    app:lottie_rawRes="@raw/anim_loading"
+    app:lottie_repeatMode="restart"
+    tools:visibility="visible" />

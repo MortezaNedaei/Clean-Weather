@@ -1,9 +1,12 @@
 package com.mooncascade.data.network
 
-import com.mooncascade.data.entity.ForecastDataEntity
-import com.mooncascade.data.entity.ForecastEntity
+import com.mooncascade.data.entity.current.CurrentWeatherEntity
+import com.mooncascade.data.entity.forecast.NextDaysForecastEntity
+import com.mooncascade.data.entity.forecast.ForecastEntity
+import com.mooncascade.data.entity.location.LocationEntity
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface WeatherApi {
 
@@ -12,12 +15,31 @@ interface WeatherApi {
      */
     object Endpoints {
         const val GET_FORECASTS = "estonia/forecast/"
+        const val GET_CURRENT_WEATHER = "estonia/current/"
+        const val GET_LOCATION_WEATHER = "world/locations/{id}"
     }
 
     /**
      * retrieves forecasts for the next 4 days
-     * @return forecasts: [ForecastEntity] [List]
+     * @return forecasts: [ForecastEntity]
      */
     @GET(Endpoints.GET_FORECASTS)
-    suspend fun getForecasts(): Response<ForecastDataEntity>
+    suspend fun getNextDaysForecasts(): Response<NextDaysForecastEntity>
+
+    /**
+     * retrieves current weather status
+     * @return current weather: [CurrentWeatherEntity]
+     */
+    @GET(Endpoints.GET_CURRENT_WEATHER)
+    suspend fun getCurrentWeather(): Response<CurrentWeatherEntity>
+
+    /**
+     * retrieves location weather status
+     * @param locationId: [Int]
+     * @return location weather: [LocationEntity]
+     */
+    @GET(Endpoints.GET_LOCATION_WEATHER)
+    suspend fun getLocationWeather(
+        @Path("id") locationId: Int
+    ): Response<LocationEntity>
 }

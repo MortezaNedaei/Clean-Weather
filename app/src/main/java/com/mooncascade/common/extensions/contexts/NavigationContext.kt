@@ -1,5 +1,6 @@
 package com.mooncascade.common.extensions.contexts
 
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,3 +14,6 @@ import androidx.navigation.fragment.findNavController
 
 context(Fragment)
 fun Fragment.navigateTo(@IdRes resId: Int) = findNavController().navigate(resId)
+
+context(Fragment)
+fun Fragment.navigateTo(@IdRes resId: Int, args: Bundle?) = findNavController().navigate(resId, args)

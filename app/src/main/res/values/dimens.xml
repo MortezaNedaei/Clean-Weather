@@ -31,4 +31,7 @@
     <!--fonts-->
     <dimen name="stroke_small">0.5dp</dimen>
 
+    <!--elevation-->
+    <dimen name="elevation_small">@dimen/_2sdp</dimen>
+
 </resources>

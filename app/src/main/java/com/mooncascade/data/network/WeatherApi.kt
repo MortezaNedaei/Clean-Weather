@@ -17,6 +17,7 @@ interface WeatherApi {
         const val GET_FORECASTS = "estonia/forecast/"
         const val GET_CURRENT_WEATHER = "estonia/current/"
         const val GET_LOCATION_WEATHER = "world/locations/{id}"
+        const val GET_RANDOM_IMAGE = "https://picsum.photos/seed/720/720"
     }
 
     /**

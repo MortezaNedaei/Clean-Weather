@@ -42,6 +42,7 @@ You can find it [Here](TASK.md)
 
 ### Backlog
 
+- [ ] CI APK release on master
 - [ ] Jetpack Compose Version
 - [ ] Room
 - [ ] MotionLayout

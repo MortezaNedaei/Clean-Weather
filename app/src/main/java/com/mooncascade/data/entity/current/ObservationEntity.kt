@@ -1,10 +1,13 @@
 package com.mooncascade.data.entity.current
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
 @Keep
+@Parcelize
 data class ObservationEntity(
     @SerializedName("airpressure")
     val airpressure: String?,
@@ -40,4 +43,4 @@ data class ObservationEntity(
     val windspeedmax: String?,
     @SerializedName("wmocode")
     val wmocode: String?
-)
+) : Parcelable

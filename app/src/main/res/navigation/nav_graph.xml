@@ -15,7 +15,11 @@
             android:id="@+id/action_HomeFragment_to_PlaceDetailsFragment"
             app:destination="@id/PlaceDetailsFragment">
             <argument
-                android:name="placeId"
+                android:name="item"
+                app:argType="com.mooncascade.data.entity.current.ObservationEntity"
+                app:nullable="false" />
+            <argument
+                android:name="transitionName"
                 app:argType="string"
                 app:nullable="false" />
         </action>
@@ -27,12 +31,14 @@
         tools:layout="@layout/fragment_place_details">
 
         <argument
-            android:name="@string/arg_place_name"
+            android:name="item"
+            app:argType="com.mooncascade.data.entity.current.ObservationEntity"
+            app:nullable="false" />
+
+        <argument
+            android:name="transitionName"
             app:argType="string"
             app:nullable="false" />
 
-        <action
-            android:id="@+id/action_PlaceDetailsFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
     </fragment>
 </navigation>

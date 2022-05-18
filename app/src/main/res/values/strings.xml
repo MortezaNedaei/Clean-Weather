@@ -17,12 +17,10 @@
     <string name="fab_date">Select Data button</string>
 
 
-    <!--    Navigation Args-->
-    <string name="arg_place_name">placeName</string>
-
-
     <!--    String Formatters-->
     <string name="format_temp">%s°</string>
+    <string name="format_temp_degrees">%s degrees</string>
+    <string name="format_temp_full_degrees">Full Temperature %s° => %s degrees</string>
     <string name="format_air_temperature">Temperature: %s°</string>
     <string name="format_humidity">Humidity: %s%%</string>
     <string name="format_visibility">Visibility: %s km</string>

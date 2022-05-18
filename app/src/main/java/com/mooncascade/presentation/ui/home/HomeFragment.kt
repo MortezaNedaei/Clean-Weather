@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.google.android.material.transition.Hold
 import com.mooncascade.R
 import com.mooncascade.common.extensions.contexts.navigateTo
 import com.mooncascade.common.extensions.contexts.observe
+import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.common.extensions.gone
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
@@ -48,6 +51,11 @@ class HomeFragment : BaseFragment() {
     @MainDispatcher
     lateinit var coroutineDispatcher: CoroutineDispatcher
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = Hold()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,6 +68,8 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         lifecycleScope.launch(coroutineDispatcher) {
             initView()
@@ -128,6 +138,16 @@ class HomeFragment : BaseFragment() {
             } else {
                 tvTemp.text =
                     getString(R.string.format_temp, airtemperature)
+                crdCurrentWeather.setOnClickListener {
+                    requireView().snack(
+                        // Show current weather in alphabet words format
+                        getString(
+                            R.string.format_temp_degrees,
+                            airtemperature.toFloat().toInt().convertNumberToWords()
+                        )
+                    )
+                }
+
             }
 
             animationView.setAnimation(
@@ -174,11 +194,24 @@ class HomeFragment : BaseFragment() {
                     )
                 })
             }
-            onClickListener = { place ->
-                navigateTo(
-                    R.id.action_HomeFragment_to_PlaceDetailsFragment,
-                    bundleOf(getString(R.string.arg_place_name) to place.name)
+            onClickListener = { place, cardView ->
+                Hold().apply {
+                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                }
+                exitTransition = Hold().apply {
+                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                }
+
+                reenterTransition = Hold().apply {
+                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                }
+
+                val extras = FragmentNavigatorExtras(cardView to cardView.transitionName)
+                HomeFragmentDirections.actionHomeFragmentToPlaceDetailsFragment(
+                    place,
+                    cardView.transitionName
                 )
+                    .also { directions -> navigateTo(directions, extras) }
             }
         }
     }

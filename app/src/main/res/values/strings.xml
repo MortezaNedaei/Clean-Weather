@@ -17,18 +17,19 @@
     <string name="fab_date">Select Data button</string>
 
 
-    <!--    Navigation Args-->
-    <string name="arg_place_name">placeName</string>
-
-
     <!--    String Formatters-->
     <string name="format_temp">%s°</string>
+    <string name="format_temp_degrees">%s degrees</string>
+    <string name="format_temp_full_degrees">Full Temperature %s° => %s degrees</string>
     <string name="format_air_temperature">Temperature: %s°</string>
+    <string name="format_weather_status">Weather Status: %s</string>
     <string name="format_humidity">Humidity: %s%%</string>
     <string name="format_visibility">Visibility: %s km</string>
+    <string name="format_visibility2">Visibility: %s</string>
     <string name="format_min_temp">Min: %s°</string>
     <string name="format_max_temp">Max: %s°</string>
     <string name="format_wind_speed">Wind Speed: %s</string>
+    <string name="format_wind_direction">Wind Direction: %s</string>
     <string name="format_air_pressure">Air Pressure: %s</string>
 
 
@@ -39,6 +40,7 @@
     <string name="example_visibility">6 km</string>
     <string name="example_weather_status">Rainy</string>
     <string name="example_wind_speed">Wind Speed: 4.3</string>
+    <string name="example_wind_direction">Wind Direction: 280°</string>
     <string name="example_air_pressure">Air Pressure: 1013.6</string>
     <string name="example_place_name">Taline</string>
     <string name="example_weekday">Thursday</string>

@@ -28,14 +28,17 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_small"
                 android:layout_marginTop="@dimen/space_medium"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/space_medium"
+                android:gravity="center"
                 android:fontFamily="@font/google_sans_regular"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textSize="@dimen/h5"
+                app:layout_constraintEnd_toStartOf="@+id/img_location"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/example_place_name" />

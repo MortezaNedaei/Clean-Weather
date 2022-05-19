@@ -77,6 +77,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_places" />
 
+            <Space
+                android:id="@+id/space"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                app:layout_constraintTop_toBottomOf="@+id/include_nearby_places" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

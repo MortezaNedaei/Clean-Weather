@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.mooncascade.R
 import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.databinding.ItemPlaceBinding
@@ -15,7 +16,14 @@ import javax.inject.Inject
 class PlacesAdapter @Inject constructor(
 ) : ListAdapter<ObservationEntity, PlacesAdapter.ViewHolder>(PlaceDiffCallback()) {
 
-    var onClickListener: ((ObservationEntity) -> Unit)? = null
+    /**
+     * navigates to the selected place with the given observation and the shared element transition id
+     */
+    var onClickListener: ((ObservationEntity, MaterialCardView) -> Unit)? = null
+
+    /**
+     * opens the GoogleMap app with the given observation
+     */
     var onMapClickListener: ((ObservationEntity) -> Unit)? = null
 
 
@@ -35,6 +43,7 @@ class PlacesAdapter @Inject constructor(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ObservationEntity) = item.run {
+            binding.crdItem.transitionName = name
             binding.tvName.text = name
             binding.tvTemp.text =
                 binding.root.resources.getString(R.string.format_air_temperature, airtemperature)
@@ -50,7 +59,7 @@ class PlacesAdapter @Inject constructor(
                 onMapClickListener?.invoke(this)
             }
             binding.crdItem.setOnClickListener {
-                onClickListener?.invoke(this)
+                onClickListener?.invoke(this, binding.crdItem)
             }
         }
 

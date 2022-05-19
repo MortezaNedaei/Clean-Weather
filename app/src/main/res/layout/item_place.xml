@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/space_small"
+    tools:context="com.mooncascade.presentation.ui.home.places.PlacesAdapter">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/crd_item"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/radius_medium"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_medium"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/space_medium"
+                android:gravity="center"
+                android:fontFamily="@font/google_sans_regular"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="@dimen/h5"
+                app:layout_constraintEnd_toStartOf="@+id/img_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/example_place_name" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_location"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginEnd="@dimen/space_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_location" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:layout_marginTop="@dimen/space_small"
+                android:alpha="0.5"
+                android:background="?attr/colorSurfaceInverse"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_temp"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_marginTop="@dimen/space_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:srcCompat="@drawable/ic_temperature" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:fontFamily="@font/google_sans_regular"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="@dimen/h6"
+                app:layout_constraintBottom_toBottomOf="@id/img_temp"
+                app:layout_constraintStart_toEndOf="@+id/img_temp"
+                app:layout_constraintTop_toTopOf="@+id/img_temp"
+                tools:text="@string/example_temperature" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_humidity"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_marginTop="@dimen/space_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_temp"
+                app:srcCompat="@drawable/ic_humidity" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:fontFamily="@font/google_sans_regular"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="@dimen/h6"
+                app:layout_constraintBottom_toBottomOf="@id/img_humidity"
+                app:layout_constraintStart_toEndOf="@+id/img_humidity"
+                app:layout_constraintTop_toTopOf="@+id/img_humidity"
+                tools:text="@string/example_humidity" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_visibility"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_marginTop="@dimen/space_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_humidity"
+                app:srcCompat="@drawable/ic_visibility" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:fontFamily="@font/google_sans_regular"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="@dimen/h6"
+                app:layout_constraintBottom_toBottomOf="@id/img_visibility"
+                app:layout_constraintStart_toEndOf="@+id/img_visibility"
+                app:layout_constraintTop_toTopOf="@+id/img_visibility"
+                tools:text="@string/example_visibility" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

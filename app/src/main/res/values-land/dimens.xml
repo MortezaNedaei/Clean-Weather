@@ -1,0 +1,34 @@
+<resources>
+
+    <!--margins-->
+    <dimen name="space_small">@dimen/_8sdp</dimen>
+    <dimen name="space_medium">@dimen/_16sdp</dimen>
+    <dimen name="space_large">@dimen/_32sdp</dimen>
+    <dimen name="space_large_extra">@dimen/_48sdp</dimen>
+
+    <!--paddings-->
+    <dimen name="text_padding_x_small">@dimen/_8sdp</dimen>
+    <dimen name="text_padding_small">@dimen/_12sdp</dimen>
+    <dimen name="text_padding_medium">@dimen/_16sdp</dimen>
+    <dimen name="text_padding_large">@dimen/_20sdp</dimen>
+
+    <!--text size-->
+    <dimen name="h7">@dimen/_9ssp</dimen>
+    <dimen name="h6">@dimen/_13ssp</dimen>
+    <dimen name="h5">@dimen/_16ssp</dimen>
+    <dimen name="h4">@dimen/_18ssp</dimen>
+    <dimen name="h3">@dimen/_28ssp</dimen>
+    <dimen name="h2">@dimen/_36sdp</dimen>
+    <dimen name="h1">@dimen/_48sdp</dimen>
+
+    <!--Button size-->
+    <dimen name="button_normal">@dimen/_44sdp</dimen>
+
+    <!--radius-->
+    <dimen name="radius_small">@dimen/_8sdp</dimen>
+    <dimen name="radius_medium">@dimen/_24sdp</dimen>
+
+    <!--elevation-->
+    <dimen name="elevation_small">@dimen/_2sdp</dimen>
+
+</resources>

@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master, develop, feature/fix-ci ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master, develop, feature/fix-ci ]
 
 jobs:
   build:

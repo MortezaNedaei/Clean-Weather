@@ -9,10 +9,14 @@ import coil.load
 import coil.request.CachePolicy
 import com.mooncascade.R
 import com.mooncascade.common.assistedViewModel
-import com.mooncascade.common.extensions.*
 import com.mooncascade.common.extensions.contexts.observe
+import com.mooncascade.common.extensions.gone
+import com.mooncascade.common.extensions.onStateChangedListener
+import com.mooncascade.common.extensions.snack
+import com.mooncascade.common.extensions.visible
 import com.mooncascade.common.materialContainerTransform
 import com.mooncascade.data.di.qualifier.MainDispatcher
+import com.mooncascade.data.entity.location.LocationEntity
 import com.mooncascade.data.network.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
 import com.mooncascade.domain.model.ViewState
@@ -22,7 +26,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 /**
- * This screen, used to show place forecast details
+ * This screen, used to show place forecast details.
+ * some data showed in this screen used from previous screen by `safeArgs`, as well some other fetched from network
  */
 @AndroidEntryPoint
 class PlaceDetailsFragment : BaseFragment() {
@@ -72,6 +77,7 @@ class PlaceDetailsFragment : BaseFragment() {
         when (forecast.status) {
             ViewState.Status.SUCCESS -> {
                 binding.includeLoading.progressBar.gone()
+                dispatchNewDataToView(forecast.data)
             }
             ViewState.Status.ERROR -> {
                 binding.includeLoading.progressBar.gone()
@@ -84,20 +90,30 @@ class PlaceDetailsFragment : BaseFragment() {
         }
     }
 
+
     private fun initView() {
 
         initAppBar()
 
+        binding.animationView.setAnimation(
+            viewModel.getCurrentWeatherAnimation(place.phenomenon)
+        )
         binding.tvCityName.text = place.name.also { binding.tvCityName2.text = it }
-        if (!place.airtemperature.isNullOrEmpty()) {
-            binding.tvTemp2.text = getString(
-                R.string.format_temp_full_degrees,
-                place.airtemperature,
-                place.airtemperature?.toFloat()?.toInt()?.convertNumberToWords()
-            )
+        binding.tvTemp.text = viewModel.getLocationWeatherDegrees(place.airtemperature)
+        binding.tvTemp2.text = viewModel.getLocationWeatherDegrees(place.airtemperature, true)
+        binding.tvWeatherStatus.text = place.phenomenon.also {
+            binding.tvWeatherStatus2.text = getString(R.string.format_weather_status, it)
         }
-
-
+        binding.tvWindSpeed.text =
+            getString(
+                R.string.format_wind_speed,
+                place.windspeed
+            ).also { binding.tvWindSpeed2.text = it }
+        binding.tvAirPressure.text =
+            getString(
+                R.string.format_air_pressure,
+                place.airpressure
+            ).also { binding.tvAirPressure2.text = it }
 
         binding.imgCover.load(WeatherApi.Endpoints.GET_RANDOM_IMAGE) {
             crossfade(true)
@@ -107,15 +123,38 @@ class PlaceDetailsFragment : BaseFragment() {
         }
     }
 
+    /**
+     * show new API call data in the view
+     */
+    private fun dispatchNewDataToView(data: LocationEntity?) = data?.let { location ->
+        with(location) {
+            binding.tvVisibility.text = getString(R.string.format_visibility2, visibility)
+            binding.tvWindDirection.text = getString(
+                R.string.format_wind_direction,
+                winddirection?.value ?: "Unknown".plus(winddirection?.units ?: "")
+            )
+        }
+    }
+
     private fun initAppBar() {
         binding.appBarLayout.onStateChangedListener { collapsed ->
-            if (collapsed) {
-                binding.tvCityName2.visible()
-                binding.tvTemp2.visible()
-            } else {
-                binding.tvCityName2.gone()
-                binding.tvTemp2.gone()
-            }
+            changeVisibilityByCollapse(collapsed)
+        }
+    }
+
+    private fun changeVisibilityByCollapse(visible: Boolean) {
+        if (visible) {
+            binding.tvCityName2.visible()
+            binding.tvTemp2.visible()
+            binding.tvWeatherStatus2.visible()
+            binding.tvAirPressure2.visible()
+            binding.tvWindSpeed2.visible()
+        } else {
+            binding.tvCityName2.gone()
+            binding.tvTemp2.gone()
+            binding.tvWeatherStatus2.gone()
+            binding.tvAirPressure2.gone()
+            binding.tvWindSpeed2.gone()
         }
     }
 

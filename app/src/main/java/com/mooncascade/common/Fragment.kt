@@ -40,6 +40,6 @@ fun Fragment.materialContainerTransform() {
         startContainerColor = Color.TRANSPARENT
         endContainerColor = Color.TRANSPARENT
         scrimColor = Color.TRANSPARENT
-        setAllContainerColors(resources.getColor(android.R.color.transparent, null))
+        setAllContainerColors(resources.getColor(android.R.color.transparent))
     }
 }

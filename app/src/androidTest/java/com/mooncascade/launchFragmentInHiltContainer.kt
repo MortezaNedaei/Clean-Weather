@@ -8,7 +8,7 @@ import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import mooncascade.HiltTestActivity
+import com.mooncascade.HiltTestActivity
 
 
 /**

@@ -1,4 +1,4 @@
-package mooncascade
+package com.mooncascade
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

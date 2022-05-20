@@ -26,6 +26,7 @@ You can find it [Here](TASK.md)
 - [x] Portrait + Landscape
 - [x] SharedElement Transition
 - [x] Coil
+- [x] UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
 
 
 ### Notes
@@ -46,7 +47,6 @@ You can find it [Here](TASK.md)
 - [ ] Jetpack Compose Version
 - [ ] Room
 - [ ] MotionLayout
-- [ ] UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
 - [ ] Fragments Split (Converting fat Fragments to small fragments)
 - [ ] MultiThreading (Coroutines ThreadPoolExecutor)
 - [ ] First Offline Cache

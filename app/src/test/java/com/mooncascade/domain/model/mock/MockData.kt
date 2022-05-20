@@ -1,8 +1,11 @@
 package com.mooncascade.domain.model.mock
 
-public val currentWeatherMockData = "{\n" +
+const val currentWeatherMockData = "{\n" +
         "  \"timestamp\": \"1652689045\"}"
 
 
-public val locationWeatherMockData = "{\n" +
+const val locationWeatherMockData = "{\n" +
         "  \"code\": \"26038\"}"
+
+const val nextDaysForecastsMockData = "{\n" +
+        "  \"date\": \"2022-05-17\"}"

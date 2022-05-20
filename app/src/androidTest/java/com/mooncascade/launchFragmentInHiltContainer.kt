@@ -8,7 +8,6 @@ import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import com.mooncascade.HiltTestActivity
 
 
 /**
@@ -22,7 +21,7 @@ import com.mooncascade.HiltTestActivity
  */
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.Theme_EstonianWeatherForcast,
+    @StyleRes themeResId: Int = R.style.Theme_CleanWeather,
     crossinline action: Fragment.() -> Unit = {}
 ) {
     val startActivityIntent = Intent.makeMainActivity(

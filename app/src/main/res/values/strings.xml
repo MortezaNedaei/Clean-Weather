@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Estonian-Weather-Forcast</string>
+    <string name="app_name">Clean-Weather</string>
     <string name="action_settings">Settings</string>
     <string name="main_fragment_label">Home</string>
     <string name="place_details_fragment_label">Place Details</string>

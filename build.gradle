@@ -19,7 +19,7 @@ buildscript {
         coilVersion = "2.0.0"
         scaleVersion = "1.0.6"
         lifecycleVersion = "2.5.0-rc01"
-        annotationVersion = "1.4.0-alpha02"
+        annotationVersion = "1.4.0-beta01"
         activityVersion = "1.4.0"
         fragmentVersion = "1.4.1"
         constraintlayoutVersion = "2.1.3"

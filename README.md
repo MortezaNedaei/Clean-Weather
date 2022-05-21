@@ -8,7 +8,7 @@ You can find it [Here](TASK.md)
 
 ### Need to download the latest release APK?
 
-You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6604003438/artifacts/248165395) or [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases/download/v1.0.0/Weather-Forecast-1.0.0-release.apk)
+You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6604003438/artifacts/248165395) or you can see all releases in [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases)
 
 
 

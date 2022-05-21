@@ -26,7 +26,7 @@ You can find it [Here](TASK.md)
 - [x] MVVM
 - [x] Single Activity
 - [x] Dagger Hilt
-- [x] Github CI
+- [x] Github CI (Automated Release APK, UnitTests)
 - [x] Retrofit
 - [x] Coroutines (**RepeatOnLifeCycle API**)
 - [x] Navigation (**SafeArgs**)
@@ -52,7 +52,6 @@ You can find it [Here](TASK.md)
 
 ### Backlog
 
-- [ ] CI APK release on master
 - [ ] Network Error Animation + Retry Button
 - [ ] Add Swipe Refresh
 - [ ] Jetpack Compose Version

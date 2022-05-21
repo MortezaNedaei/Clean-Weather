@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ master, develop, feature/general-improvements ]
+    branches: [ main, develop, feature/general-improvements ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ main, develop ]
 
 jobs:
   build:
@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: App
-          path: ${{ github.workspace}}/app/build/outputs/apk/release/
+          path: app/build/outputs/apk/release/*.apk

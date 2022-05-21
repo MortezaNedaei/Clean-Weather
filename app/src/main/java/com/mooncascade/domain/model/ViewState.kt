@@ -14,7 +14,7 @@ sealed class ViewState<out T>(
 ) {
     class Success<T>(data: T?) : ViewState<T>(data, null, SUCCESS)
     class Error<T>(message: String, data: T? = null, networkError: Boolean? = false) :
-        ViewState<T>(data, message, ERROR)
+        ViewState<T>(data, message, ERROR, networkError)
 
     object Loading : ViewState<Nothing>(status = LOADING)
     object Idle : ViewState<Nothing>(status = IDLE)

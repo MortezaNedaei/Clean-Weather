@@ -10,14 +10,22 @@ You can find it [Here](TASK.md)
 
 You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6604003438/artifacts/248165395) or you can see all releases in [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases)
 
+### How to start?
+
+If you are using the stable version of AndroidStudio, you need to downgrade the gradle plugin version to a stable version.
 
 
 ### Screen Shots
 
+![animation2](https://user-images.githubusercontent.com/38072572/169666955-92997c7b-f61b-4a57-8cd1-9070ec6211b7.gif)
+![animation1](https://user-images.githubusercontent.com/38072572/169666908-9d1c60da-47b7-4a9f-a0a4-351664bfa5a4.gif)
+
 <a href="url"><img src="art/home-dark-1.png" width="350" height="700"></a>
 <a href="url"><img src="art/home-light-1.png" width="350" height="700"></a>
-<a href="url"><img src="art/loading.png" width="350" height="700"></a>
 <a href="url"><img src="art/home-dark-landscape-1.png"></a>
+<a href="url"><img src="art/loading.png" width="350" height="700"></a>
+<a href="url"><img src="art/details-dark-1.png" width="350" height="700"></a>
+
 
 ### Libraries and Tools
 - [x] Android Studio Electric Canary 3

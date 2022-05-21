@@ -81,7 +81,7 @@ class PlaceDetailsFragment : BaseFragment() {
             }
             ViewState.Status.ERROR -> {
                 binding.includeLoading.progressBar.gone()
-                requireView().snack(forecast.message ?: "")
+                snack(forecast.message ?: "")
             }
             ViewState.Status.LOADING -> {
                 binding.includeLoading.progressBar.visible()

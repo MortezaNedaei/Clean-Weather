@@ -114,7 +114,7 @@ class HomeFragment : BaseFragment() {
             ViewState.Status.ERROR -> {
                 binding.includeCurrentWeather.includeLoading.progressBar.gone()
                 binding.includeNearbyPlaces.includeLoading.progressBar.gone()
-                requireView().snack(currentWeather.message ?: "")
+                snack(currentWeather.message ?: "")
             }
             ViewState.Status.LOADING -> {
                 binding.includeCurrentWeather.includeLoading.progressBar.visible()
@@ -139,7 +139,7 @@ class HomeFragment : BaseFragment() {
                 tvTemp.text =
                     getString(R.string.format_temp, airtemperature)
                 crdCurrentWeather.setOnClickListener {
-                    requireView().snack(
+                    snack(
                         // Show current weather in alphabet words format
                         getString(
                             R.string.format_temp_degrees,
@@ -165,7 +165,7 @@ class HomeFragment : BaseFragment() {
             }
             ViewState.Status.ERROR -> {
                 binding.includeNextDaysForecasts.includeLoading.progressBar.gone()
-                requireView().snack(forecasts.message ?: "")
+                snack(forecasts.message ?: "")
             }
             ViewState.Status.LOADING -> {
                 binding.includeNextDaysForecasts.includeLoading.progressBar.visible()
@@ -179,7 +179,7 @@ class HomeFragment : BaseFragment() {
         binding.includeNextDaysForecasts.rvNextDaysForecasts.adapter =
             nextDaysForecastsAdapter.apply {
                 onClickListener = { forecast ->
-                    requireView().snack("Weather Description: ${forecast.day?.text}")
+                    snack("Weather Description: ${forecast.day?.text}")
                 }
             }
     }
@@ -219,12 +219,12 @@ class HomeFragment : BaseFragment() {
     private fun initClicks() {
         binding.fabDate.setOnClickListener {
             // TODO: create additional dialog fragment to show date picker
-            requireView().snack("will be implemented soon")
+            snack("will be implemented soon")
         }
 
         binding.tvPlacesViewMore.setOnClickListener {
             // TODO: create additional fragment to show list of nearby places in vertical list
-            requireView().snack("will be implemented soon")
+            snack("will be implemented soon")
         }
     }
 

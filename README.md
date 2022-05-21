@@ -12,7 +12,10 @@ You can find it [Here](TASK.md)
 
 ### Screen Shots
 
+<a href="url"><img src="art/home-dark1.png" width="350" height="700"></a>
+<a href="url"><img src="art/home-light1.png" width="350" height="700"></a>
 <a href="url"><img src="art/loading.png" width="350" height="700"></a>
+<a href="url"><img src="art/home-dark-landscape-1.png"></a>
 
 ### Libraries and Tools
 - [x] Android Studio Electric Canary 3

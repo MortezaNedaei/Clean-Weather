@@ -52,6 +52,7 @@ You can download the latest version via [Github CI](https://github.com/MortezaNe
 - Some of objects in observation field in the api/estonia/current/ endpoint, have an empty string for their `wmocode`.
   So we can't make an API call for this places. instead we can show details from previous screen.
 - The API doesn't provide any image url for the place. So it's better to use some random images from network to have a better UX.
+- Some place ids in the `estonia/current` response, could not be found in `world/locations/{id}`. So you might see handled error of `Network Error: Not Found`
 
 ### Backlog
 

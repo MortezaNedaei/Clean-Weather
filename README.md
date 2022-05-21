@@ -12,7 +12,7 @@ You can find it [Here](TASK.md)
 
 ### Screen Shots
 
-<a href="url"><img src="art/loading" width="350" height="700"></a>
+<a href="url"><img src="art/loading.png" width="350" height="700"></a>
 
 ### Libraries and Tools
 - [x] Android Studio Electric Canary 3

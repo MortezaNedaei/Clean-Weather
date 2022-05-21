@@ -44,6 +44,8 @@ You can find it [Here](TASK.md)
 ### Backlog
 
 - [ ] CI APK release on master
+- [ ] Network Error Animation + Retry Button
+- [ ] Add Swipe Refresh
 - [ ] Jetpack Compose Version
 - [ ] Room
 - [ ] MotionLayout

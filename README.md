@@ -6,7 +6,13 @@ This is a weather forecast application based on the modern Android development t
 
 You can find it [Here](TASK.md)
 
+### Need to download latest release APK?
+
+
+
 ### Screen Shots
+
+<a href="url"><img src="art/loading" width="350" height="700"></a>
 
 ### Libraries and Tools
 - [x] Android Studio Electric Canary 3

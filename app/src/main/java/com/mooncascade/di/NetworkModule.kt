@@ -1,4 +1,4 @@
-package com.mooncascade.data.di
+package com.mooncascade.di
 
 import com.google.gson.Gson
 import com.mooncascade.BuildConfig

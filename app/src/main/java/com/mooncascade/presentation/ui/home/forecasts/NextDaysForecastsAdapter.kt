@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mooncascade.R
-import com.mooncascade.data.di.DateTimeFormatter
+import com.mooncascade.di.DateTimeFormatter
 import com.mooncascade.data.entity.forecast.ForecastEntity
 import com.mooncascade.databinding.ItemNextDayForecastBinding
 import com.mooncascade.domain.model.WeatherType

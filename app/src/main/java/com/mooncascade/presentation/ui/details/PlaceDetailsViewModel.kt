@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mooncascade.R
 import com.mooncascade.common.extensions.convertNumberToWords
-import com.mooncascade.data.di.qualifier.IoDispatcher
+import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.data.entity.location.LocationEntity
 import com.mooncascade.data.respository.WeatherDataRepository

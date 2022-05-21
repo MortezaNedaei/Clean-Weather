@@ -1,10 +1,10 @@
-package com.mooncascade.data.di
+package com.mooncascade.di
 
 
-import com.mooncascade.data.di.qualifier.DefaultDispatcher
-import com.mooncascade.data.di.qualifier.IoDispatcher
-import com.mooncascade.data.di.qualifier.MainDispatcher
-import com.mooncascade.data.di.qualifier.MainImmediateDispatcher
+import com.mooncascade.di.qualifier.DefaultDispatcher
+import com.mooncascade.di.qualifier.IoDispatcher
+import com.mooncascade.di.qualifier.MainDispatcher
+import com.mooncascade.di.qualifier.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

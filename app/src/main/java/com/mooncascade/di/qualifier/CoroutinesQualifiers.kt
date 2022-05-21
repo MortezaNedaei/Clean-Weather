@@ -1,4 +1,4 @@
-package com.mooncascade.data.di.qualifier
+package com.mooncascade.di.qualifier
 
 
 import javax.inject.Qualifier

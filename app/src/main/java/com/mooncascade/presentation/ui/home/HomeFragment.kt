@@ -18,7 +18,7 @@ import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.common.extensions.gone
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
-import com.mooncascade.data.di.qualifier.MainDispatcher
+import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.databinding.FragmentHomeBinding
 import com.mooncascade.domain.model.ViewState

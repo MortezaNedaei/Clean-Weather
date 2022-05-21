@@ -15,7 +15,7 @@ import com.mooncascade.common.extensions.onStateChangedListener
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
 import com.mooncascade.common.materialContainerTransform
-import com.mooncascade.data.di.qualifier.MainDispatcher
+import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.data.entity.location.LocationEntity
 import com.mooncascade.data.network.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
@@ -119,7 +119,7 @@ class PlaceDetailsFragment : BaseFragment() {
             crossfade(true)
             placeholder(R.drawable.ic_placeholder)
             error(R.drawable.ic_placeholder)
-            diskCachePolicy(CachePolicy.ENABLED)
+            diskCachePolicy(CachePolicy.DISABLED)
         }
     }
 

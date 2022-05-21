@@ -1,6 +1,6 @@
 package com.mooncascade.domain.interactor
 
-import com.mooncascade.data.di.qualifier.IoDispatcher
+import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.forecast.NextDaysForecastEntity
 import com.mooncascade.data.respository.WeatherDataRepository
 import kotlinx.coroutines.CoroutineDispatcher

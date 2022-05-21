@@ -3,7 +3,6 @@ package com.mooncascade.presentation.ui.details
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mooncascade.R
 import com.mooncascade.common.extensions.convertNumberToWords
@@ -15,6 +14,7 @@ import com.mooncascade.domain.interactor.GetLocationWeatherUseCase
 import com.mooncascade.domain.interactor.LocationWeatherParams
 import com.mooncascade.domain.model.ViewState
 import com.mooncascade.domain.model.WeatherType
+import com.mooncascade.presentation.base.BaseViewModel
 import com.mooncascade.presentation.utils.Constants
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -22,7 +22,6 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
@@ -32,7 +31,7 @@ class PlaceDetailsViewModel @AssistedInject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     @ActivityContext private val context: Context,
     @Assisted private val savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : BaseViewModel() {
 
     companion object {
         const val TAG = "PlaceDetailsViewModel"
@@ -63,14 +62,14 @@ class PlaceDetailsViewModel @AssistedInject constructor(
             if (locationId.isNullOrEmpty()) return@launch
             _locationWeatherFlow.value = ViewState.Loading
             useCase.invoke(LocationWeatherParams(locationId.toInt()))
-                .catch { e ->
-                    _locationWeatherFlow.value =
-                        ViewState.Error(
-                            e.message ?: "$TAG: ${Constants.ERROR_GET_LOCATION_FORECAST}"
-                        )
-                }
                 .collect { data ->
-                    _locationWeatherFlow.value = ViewState.Success(data.getOrNull())
+                    _locationWeatherFlow.value =
+                        if (data.isSuccess)
+                            ViewState.Success(data.getOrNull())
+                        else
+                            makeError(
+                                data.exceptionOrNull(), TAG, Constants.ERROR_GET_LOCATION_FORECAST
+                            )
                 }
         }
 

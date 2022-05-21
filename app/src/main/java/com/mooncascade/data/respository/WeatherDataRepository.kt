@@ -16,21 +16,12 @@ class WeatherDataRepository @Inject constructor(
         private const val TAG = "WeatherDataRepository"
     }
 
-    override suspend fun getNextDaysForecasts(): Flow<Result<NextDaysForecastEntity>> {
-        // TODO check network here or in the BaseDataSource
-        val response = weatherApi.getNextDaysForecasts()
-        return getResult { response }
-    }
+    override suspend fun getNextDaysForecasts(): Flow<Result<NextDaysForecastEntity>> =
+        getResult { weatherApi.getNextDaysForecasts() }
 
-    override suspend fun getCurrentWeather(): Flow<Result<CurrentWeatherEntity>> {
-        // TODO check network here or in the BaseDataSource
-        val response = weatherApi.getCurrentWeather()
-        return getResult { response }
-    }
+    override suspend fun getCurrentWeather(): Flow<Result<CurrentWeatherEntity>> =
+        getResult { weatherApi.getCurrentWeather() }
 
-    override suspend fun getLocationWeather(locationId: Int): Flow<Result<LocationEntity>> {
-        // TODO check network here or in the BaseDataSource
-        val response = weatherApi.getLocationWeather(locationId)
-        return getResult { response }
-    }
+    override suspend fun getLocationWeather(locationId: Int): Flow<Result<LocationEntity>> =
+        getResult { weatherApi.getLocationWeather(locationId) }
 }

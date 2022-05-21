@@ -8,6 +8,7 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_THROUGH
 import com.mooncascade.R
 
 /**
@@ -40,6 +41,8 @@ fun Fragment.materialContainerTransform() {
         startContainerColor = Color.TRANSPARENT
         endContainerColor = Color.TRANSPARENT
         scrimColor = Color.TRANSPARENT
+        fadeMode = FADE_MODE_THROUGH
+        fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 1f)
         setAllContainerColors(resources.getColor(android.R.color.transparent))
     }
 }

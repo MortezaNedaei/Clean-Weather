@@ -1,4 +1,4 @@
-package com.mooncascade.data.di
+package com.mooncascade.di
 
 import com.google.gson.Gson
 import com.mooncascade.BuildConfig
@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.ConnectionPool
 import okhttp3.Dispatcher
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -49,6 +50,20 @@ object NetworkModule {
     fun provideHttpLoggingInterceptor(
         logLevel: HttpLoggingInterceptor.Level
     ) = HttpLoggingInterceptor().apply { level = logLevel }
+
+    /**
+     * Provides HeadersInterceptor to use in [provideOkHttpClient] method
+     */
+    @Provides
+    @Singleton
+    fun provideHeadersInterceptor() = Interceptor { chain ->
+        chain.proceed(
+            chain.request().newBuilder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("accept", "application/json")
+                .build()
+        )
+    }
 
     /**
      * Provides OkHttpClient to use in [provideRetrofit] method

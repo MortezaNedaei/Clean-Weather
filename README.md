@@ -6,7 +6,26 @@ This is a weather forecast application based on the modern Android development t
 
 You can find it [Here](TASK.md)
 
+### Need to download the latest release APK?
+
+You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6605145902/artifacts/248246065) or you can see all releases in [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases)
+
+### How to start?
+
+If you are using the stable version of AndroidStudio, you need to downgrade the gradle plugin version to a stable version.
+
+
 ### Screen Shots
+
+![animation2](https://user-images.githubusercontent.com/38072572/169666955-92997c7b-f61b-4a57-8cd1-9070ec6211b7.gif)
+![animation1](https://user-images.githubusercontent.com/38072572/169666908-9d1c60da-47b7-4a9f-a0a4-351664bfa5a4.gif)
+
+<a href="url"><img src="art/home-dark-1.png" width="350" height="700"></a>
+<a href="url"><img src="art/home-light-1.png" width="350" height="700"></a>
+<a href="url"><img src="art/home-dark-landscape-1.png"></a>
+<a href="url"><img src="art/loading.png" width="350" height="700"></a>
+<a href="url"><img src="art/details-dark-1.png" width="350" height="700"></a>
+
 
 ### Libraries and Tools
 - [x] Android Studio Electric Canary 3
@@ -17,7 +36,7 @@ You can find it [Here](TASK.md)
 - [x] MVVM
 - [x] Single Activity
 - [x] Dagger Hilt
-- [x] Github CI
+- [x] Github CI (Automated Release APK, UnitTests)
 - [x] Retrofit
 - [x] Coroutines (**RepeatOnLifeCycle API**)
 - [x] Navigation (**SafeArgs**)
@@ -26,6 +45,8 @@ You can find it [Here](TASK.md)
 - [x] Portrait + Landscape
 - [x] SharedElement Transition
 - [x] Coil
+- [x] UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
+- [x] Network Check
 
 
 ### Notes
@@ -39,14 +60,15 @@ You can find it [Here](TASK.md)
 - Some of objects in observation field in the api/estonia/current/ endpoint, have an empty string for their `wmocode`.
   So we can't make an API call for this places. instead we can show details from previous screen.
 - The API doesn't provide any image url for the place. So it's better to use some random images from network to have a better UX.
+- Some place ids in the `estonia/current` response, could not be found in `world/locations/{id}`. So you might see handled error of `Network Error: Not Found`
 
 ### Backlog
 
-- [ ] CI APK release on master
+- [ ] Network Error Animation + Retry Button
+- [ ] Add Swipe Refresh
 - [ ] Jetpack Compose Version
 - [ ] Room
 - [ ] MotionLayout
-- [ ] UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
 - [ ] Fragments Split (Converting fat Fragments to small fragments)
 - [ ] MultiThreading (Coroutines ThreadPoolExecutor)
 - [ ] First Offline Cache
@@ -56,4 +78,3 @@ You can find it [Here](TASK.md)
 - [ ] DatePicker
 - [ ] MultiLanguage
 - [ ] MultiTheme
-- [ ] Network Check

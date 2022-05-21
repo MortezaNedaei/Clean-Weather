@@ -1,6 +1,8 @@
 package com.mooncascade.presentation.base
 
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 
-open class BaseFragment : Fragment() {
+@AndroidEntryPoint
+abstract class BaseFragment : Fragment() {
 }

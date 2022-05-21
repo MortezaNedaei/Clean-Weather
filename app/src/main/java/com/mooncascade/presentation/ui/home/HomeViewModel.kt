@@ -1,8 +1,7 @@
 package com.mooncascade.presentation.ui.home
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mooncascade.data.di.qualifier.IoDispatcher
+import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.current.CurrentWeatherEntity
 import com.mooncascade.data.entity.forecast.ForecastEntity
 import com.mooncascade.data.respository.WeatherDataRepository
@@ -10,11 +9,11 @@ import com.mooncascade.domain.interactor.GetCurrentWeatherUseCase
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
 import com.mooncascade.domain.model.ViewState
 import com.mooncascade.domain.model.WeatherType
+import com.mooncascade.presentation.base.BaseViewModel
 import com.mooncascade.presentation.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val nextDaysForecastsUseCase: GetNextDaysForecastsUseCase,
     private val currentWeatherUseCase: GetCurrentWeatherUseCase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
-) : ViewModel() {
+) : BaseViewModel() {
 
     companion object {
         private const val TAG = "HomeViewModel"
@@ -46,25 +45,29 @@ class HomeViewModel @Inject constructor(
     private fun getCurrentWeather() = viewModelScope.launch(coroutineDispatcher) {
         _currentWeatherFlow.value = ViewState.Loading
         currentWeatherUseCase.invoke()
-            .catch { e ->
-                _currentWeatherFlow.value =
-                    ViewState.Error(e.message ?: "$TAG: ${Constants.ERROR_GET_FORECASTS}")
-            }
             .collect { data ->
-                _currentWeatherFlow.value = ViewState.Success(data.getOrNull())
+                currentWeatherFlow.value =
+                    if (data.isSuccess)
+                        ViewState.Success(data.getOrNull())
+                    else
+                        makeError(
+                            data.exceptionOrNull(), TAG, Constants.ERROR_GET_CURRENT_WEATHER
+                        )
             }
     }
+
 
     private fun getNextDaysForecasts() = viewModelScope.launch(coroutineDispatcher) {
         _nextDaysForecastsFlow.value = ViewState.Loading
         nextDaysForecastsUseCase.invoke()
-            .catch { e ->
-                _nextDaysForecastsFlow.value =
-                    ViewState.Error(e.message ?: "$TAG: ${Constants.ERROR_GET_FORECASTS}")
-            }
             .collect { data ->
                 _nextDaysForecastsFlow.value =
-                    ViewState.Success(data.getOrNull()?.forecasts ?: emptyList())
+                    if (data.isSuccess)
+                        ViewState.Success(data.getOrNull()?.forecasts ?: emptyList())
+                    else
+                        makeError(
+                            data.exceptionOrNull(), TAG, Constants.ERROR_GET_FORECASTS
+                        )
             }
     }
 

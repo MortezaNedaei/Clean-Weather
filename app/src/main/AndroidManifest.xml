@@ -11,11 +11,11 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EstonianWeatherForcast"
+        android:theme="@style/Theme.CleanWeather"
         tools:targetApi="31">
         <activity
             android:name=".presentation.ui.main.MainActivity"
@@ -23,7 +23,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.EstonianWeatherForcast"
+            android:theme="@style/Theme.CleanWeather"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

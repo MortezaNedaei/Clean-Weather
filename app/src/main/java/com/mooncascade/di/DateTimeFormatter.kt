@@ -1,7 +1,7 @@
-package com.mooncascade.data.di
+package com.mooncascade.di
 
 import android.content.Context
-import com.mooncascade.data.di.qualifier.ApplicationScope
+import com.mooncascade.di.qualifier.ApplicationScope
 import dagger.hilt.android.qualifiers.ActivityContext
 import java.text.SimpleDateFormat
 import java.util.*

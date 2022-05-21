@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import coil.load
+import coil.ImageLoader
 import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.mooncascade.R
 import com.mooncascade.common.assistedViewModel
 import com.mooncascade.common.extensions.contexts.observe
@@ -15,10 +16,10 @@ import com.mooncascade.common.extensions.onStateChangedListener
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
 import com.mooncascade.common.materialContainerTransform
-import com.mooncascade.data.di.qualifier.MainDispatcher
 import com.mooncascade.data.entity.location.LocationEntity
 import com.mooncascade.data.network.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
+import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.domain.model.ViewState
 import com.mooncascade.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,9 @@ class PlaceDetailsFragment : BaseFragment() {
     @Inject
     @MainDispatcher
     lateinit var coroutineDispatcher: CoroutineDispatcher
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     private val args by navArgs<PlaceDetailsFragmentArgs>()
     private val place by lazy(LazyThreadSafetyMode.NONE) { args.item }
@@ -81,7 +85,7 @@ class PlaceDetailsFragment : BaseFragment() {
             }
             ViewState.Status.ERROR -> {
                 binding.includeLoading.progressBar.gone()
-                requireView().snack(forecast.message ?: "")
+                snack(forecast.message ?: "")
             }
             ViewState.Status.LOADING -> {
                 binding.includeLoading.progressBar.visible()
@@ -115,11 +119,13 @@ class PlaceDetailsFragment : BaseFragment() {
                 place.airpressure
             ).also { binding.tvAirPressure2.text = it }
 
-        binding.imgCover.load(WeatherApi.Endpoints.GET_RANDOM_IMAGE) {
-            crossfade(true)
-            placeholder(R.drawable.ic_placeholder)
-            error(R.drawable.ic_placeholder)
-            diskCachePolicy(CachePolicy.ENABLED)
+        with(binding.imgCover) {
+            val request = ImageRequest.Builder(context)
+                .data(WeatherApi.Endpoints.GET_RANDOM_IMAGE)
+                .target(this)
+                .memoryCachePolicy(CachePolicy.DISABLED) // We need to get a new random image currently
+                .build()
+            imageLoader.enqueue(request)
         }
     }
 

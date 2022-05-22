@@ -1,4 +1,4 @@
-package com.mooncascade.di
+package com.mooncascade.di.network
 
 
 import com.mooncascade.data.network.WeatherApi

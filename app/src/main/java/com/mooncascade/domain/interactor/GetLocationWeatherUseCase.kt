@@ -1,8 +1,8 @@
 package com.mooncascade.domain.interactor
 
-import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.location.LocationEntity
-import com.mooncascade.data.respository.WeatherDataRepository
+import com.mooncascade.di.qualifier.IoDispatcher
+import com.mooncascade.domain.respository.WeatherRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,7 +15,7 @@ data class LocationWeatherParams(
 )
 
 class GetLocationWeatherUseCase @Inject constructor(
-    private val repository: WeatherDataRepository,
+    private val repository: WeatherRepository,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : UseCase<LocationWeatherParams?, Flow<Result<LocationEntity>>>(coroutineDispatcher) {
 

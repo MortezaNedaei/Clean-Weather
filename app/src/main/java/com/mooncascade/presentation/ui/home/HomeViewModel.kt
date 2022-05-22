@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.current.CurrentWeatherEntity
 import com.mooncascade.data.entity.forecast.ForecastEntity
-import com.mooncascade.data.respository.WeatherDataRepository
 import com.mooncascade.domain.interactor.GetCurrentWeatherUseCase
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
 import com.mooncascade.domain.model.ViewState
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: WeatherDataRepository,
     private val nextDaysForecastsUseCase: GetNextDaysForecastsUseCase,
     private val currentWeatherUseCase: GetCurrentWeatherUseCase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher

@@ -9,7 +9,6 @@ import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.data.entity.location.LocationEntity
-import com.mooncascade.data.respository.WeatherDataRepository
 import com.mooncascade.domain.interactor.GetLocationWeatherUseCase
 import com.mooncascade.domain.interactor.LocationWeatherParams
 import com.mooncascade.domain.model.ViewState
@@ -26,7 +25,6 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
 class PlaceDetailsViewModel @AssistedInject constructor(
-    private val repository: WeatherDataRepository,
     private val useCase: GetLocationWeatherUseCase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     @ActivityContext private val context: Context,

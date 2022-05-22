@@ -126,6 +126,15 @@ dependencies {
     ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
     //endregion
 
+    //region DB
+    implementation("androidx.room:room-runtime:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
+    testImplementation("androidx.room:room-testing:$roomVersion")
+    //endregion
+
+
     //region Paging
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     //endregion

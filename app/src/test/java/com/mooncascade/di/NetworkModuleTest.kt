@@ -1,6 +1,6 @@
 package com.mooncascade.di
 
-import com.mooncascade.di.NetworkModule
+import com.mooncascade.di.network.NetworkModule
 import com.mooncascade.data.network.WeatherApi
 import com.mooncascade.BuildConfig
 import com.squareup.moshi.Moshi

@@ -36,7 +36,7 @@ If you are using the stable version of AndroidStudio, you need to downgrade the 
 - [x] MVVM
 - [x] Single Activity
 - [x] Dagger Hilt
-- [x] First Offline Cache
+- [x] Cache Strategy ([Offline-First](""), [Online-First](""))
 - [x] Github CI (Automated Release APK, UnitTests)
 - [x] Retrofit
 - [x] Coroutines (**RepeatOnLifeCycle API**)

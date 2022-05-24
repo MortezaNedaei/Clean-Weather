@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mooncascade.R
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.domain.interactor.GetLocationDetailsUseCase

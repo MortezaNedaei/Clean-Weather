@@ -1,6 +1,7 @@
 package com.mooncascade.data.respository
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.mapper.toDomain
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.data.respository.datasource.base.BaseDataSource
@@ -18,10 +19,6 @@ class LocationDetailsDataRepository @Inject constructor(
     private val weatherApi: WeatherApi,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseDataSource(), LocationDetailsRepository {
-
-    companion object {
-        private const val TAG = "WeatherDataRepository"
-    }
 
 
     override suspend fun fetchLocationWeather(locationId: Int): Flow<Result<Location?>> = flow {

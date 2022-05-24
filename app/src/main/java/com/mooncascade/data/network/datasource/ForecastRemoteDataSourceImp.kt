@@ -1,6 +1,7 @@
 package com.mooncascade.data.network.datasource
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.mapper.forecast.toDomain
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.data.respository.datasource.base.BaseDataSource
@@ -15,9 +16,6 @@ class ForecastRemoteDataSourceImp @Inject constructor(
     private val weatherApi: WeatherApi
 ) : BaseDataSource(), ForecastRemoteDataSource {
 
-    companion object {
-        const val TAG = "ForecastRemoteDataSourceImp"
-    }
 
     override suspend fun getForecasts(): Flow<Result<List<Forecast>>> = flow {
         val response = getResult { weatherApi.getNextDaysForecasts() }

@@ -14,9 +14,6 @@ class ObservationDataStore @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    companion object {
-        const val TAG = "ObservationDataStore"
-    }
 
     suspend fun getObservations(): Flow<List<ObservationEntity>> = withContext(dispatcher) {
         dao.getAll()

@@ -13,9 +13,6 @@ class ForecastDataStore @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    companion object {
-        const val TAG = "ForecastDataStore"
-    }
 
     suspend fun getForecasts(): Flow<List<ForecastEntity>> = withContext(dispatcher) {
         dao.getAll()

@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 data class Place(
-    val id: String,
+    val id: Long,
     val name: String?,
     val phenomenon: String?,
     val tempmax: Int?,

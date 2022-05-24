@@ -2,6 +2,7 @@ package com.mooncascade.data.respository
 
 import android.content.Context
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.cache.datastore.ObservationLocalDataSourceImp
 import com.mooncascade.data.network.datasource.ObservationRemoteDataSourceImp
 import com.mooncascade.data.respository.datasource.base.BaseDataSource
@@ -23,9 +24,6 @@ class ObservationDataRepository @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseDataSource(), ObservationRepository {
 
-    companion object {
-        private const val TAG = "ObservationDataRepository"
-    }
 
     override suspend fun fetchObservations(strategy: CacheStrategy): Flow<Result<List<Observation>>> {
         return fetchObservationsByStrategy(strategy)

@@ -1,14 +1,14 @@
 package com.mooncascade.presentation.ui.home
 
 import androidx.lifecycle.viewModelScope
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.di.qualifier.IoDispatcher
-import com.mooncascade.data.entity.current.CurrentWeatherEntity
-import com.mooncascade.data.entity.forecast.ForecastEntity
-import com.mooncascade.data.respository.WeatherDataRepository
-import com.mooncascade.domain.interactor.GetCurrentWeatherUseCase
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
+import com.mooncascade.domain.interactor.GetObservationsUseCase
 import com.mooncascade.domain.model.ViewState
 import com.mooncascade.domain.model.WeatherType
+import com.mooncascade.domain.model.current.Observation
+import com.mooncascade.domain.model.forecast.Forecast
 import com.mooncascade.presentation.base.BaseViewModel
 import com.mooncascade.presentation.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,34 +19,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: WeatherDataRepository,
+    private val observationsUseCase: GetObservationsUseCase,
     private val nextDaysForecastsUseCase: GetNextDaysForecastsUseCase,
-    private val currentWeatherUseCase: GetCurrentWeatherUseCase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-    companion object {
-        private const val TAG = "HomeViewModel"
-    }
 
-    private val _currentWeatherFlow =
-        MutableStateFlow<ViewState<CurrentWeatherEntity>>(ViewState.Idle)
-    val currentWeatherFlow get() = _currentWeatherFlow
+    private val _observationsFlow =
+        MutableStateFlow<ViewState<List<Observation>>>(ViewState.Idle)
+    val observationsFlow get() = _observationsFlow
+
 
     private val _nextDaysForecastsFlow =
-        MutableStateFlow<ViewState<List<ForecastEntity>>>(ViewState.Idle)
+        MutableStateFlow<ViewState<List<Forecast>>>(ViewState.Idle)
     val nextDaysForecastsFlow get() = _nextDaysForecastsFlow
 
     init {
-        getCurrentWeather()
+        getObservations()
         getNextDaysForecasts()
     }
 
-    private fun getCurrentWeather() = viewModelScope.launch(coroutineDispatcher) {
-        _currentWeatherFlow.value = ViewState.Loading
-        currentWeatherUseCase.invoke()
+    private fun getObservations() = viewModelScope.launch(coroutineDispatcher) {
+        _observationsFlow.value = ViewState.Loading
+        observationsUseCase.invoke()
             .collect { data ->
-                currentWeatherFlow.value =
+                _observationsFlow.value =
                     if (data.isSuccess)
                         ViewState.Success(data.getOrNull())
                     else
@@ -63,7 +60,7 @@ class HomeViewModel @Inject constructor(
             .collect { data ->
                 _nextDaysForecastsFlow.value =
                     if (data.isSuccess)
-                        ViewState.Success(data.getOrNull()?.forecasts ?: emptyList())
+                        ViewState.Success(data.getOrNull() ?: emptyList())
                     else
                         makeError(
                             data.exceptionOrNull(), TAG, Constants.ERROR_GET_FORECASTS

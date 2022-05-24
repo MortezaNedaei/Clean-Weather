@@ -5,15 +5,15 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mooncascade.R
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.di.qualifier.IoDispatcher
-import com.mooncascade.data.entity.current.ObservationEntity
-import com.mooncascade.data.entity.location.LocationEntity
-import com.mooncascade.data.respository.WeatherDataRepository
-import com.mooncascade.domain.interactor.GetLocationWeatherUseCase
+import com.mooncascade.domain.interactor.GetLocationDetailsUseCase
 import com.mooncascade.domain.interactor.LocationWeatherParams
 import com.mooncascade.domain.model.ViewState
 import com.mooncascade.domain.model.WeatherType
+import com.mooncascade.domain.model.current.Observation
+import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseViewModel
 import com.mooncascade.presentation.utils.Constants
 import dagger.assisted.Assisted
@@ -26,16 +26,12 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
 class PlaceDetailsViewModel @AssistedInject constructor(
-    private val repository: WeatherDataRepository,
-    private val useCase: GetLocationWeatherUseCase,
+    private val useCase: GetLocationDetailsUseCase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     @ActivityContext private val context: Context,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    companion object {
-        const val TAG = "PlaceDetailsViewModel"
-    }
 
     @AssistedFactory
     interface PlaceDetailsViewModelFactory {
@@ -43,11 +39,11 @@ class PlaceDetailsViewModel @AssistedInject constructor(
     }
 
     private val argument by lazy(LazyThreadSafetyMode.NONE) {
-        savedStateHandle.get<ObservationEntity>("item")
+        savedStateHandle.get<Observation>("item")
     }
 
     private val _locationWeatherFlow =
-        MutableStateFlow<ViewState<LocationEntity>>(ViewState.Idle)
+        MutableStateFlow<ViewState<Location>>(ViewState.Idle)
     val locationWeatherFlow get() = _locationWeatherFlow
 
     init {

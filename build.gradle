@@ -22,7 +22,7 @@ buildscript {
         annotationVersion = "1.4.0-beta01"
         activityVersion = "1.4.0"
         fragmentVersion = "1.4.1"
-        constraintlayoutVersion = "2.1.3"
+        constraintlayoutVersion = "2.1.4"
         recyclerviewVersion = "1.2.1"
         swiperefreshlayoutVersion = "1.2.0-alpha01"
         lottieVersion = "5.1.1"

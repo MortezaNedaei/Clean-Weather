@@ -8,7 +8,7 @@ You can find it [Here](TASK.md)
 
 ### Need to download the latest release APK?
 
-You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6605145902/artifacts/248246065) or you can see all releases in [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases)
+You can download the latest version via [Github CI](https://github.com/MortezaNedaei/Clean-Weather/suites/6640138403/artifacts/250639351) or you can see all releases in [Github Releases](https://github.com/MortezaNedaei/Clean-Weather/releases)
 
 ### How to start?
 
@@ -36,17 +36,18 @@ If you are using the stable version of AndroidStudio, you need to downgrade the 
 - [x] MVVM
 - [x] Single Activity
 - [x] Dagger Hilt
-- [x] Cache Strategy ([Offline-First](""), [Online-First](""))
-- [x] Github CI (Automated Release APK, UnitTests)
-- [x] Retrofit
+- [x] Room Offline Database
+- [x] Cache Strategy ([Offline-First](https://github.com/MortezaNedaei/Clean-Weather/blob/ef81b6d44d5f0afabb1e5327452c4691775fb624/app/src/main/java/com/mooncascade/data/respository/ObservationDataRepository.kt#L78), [Online-First](https://github.com/MortezaNedaei/Clean-Weather/blob/ef81b6d44d5f0afabb1e5327452c4691775fb624/app/src/main/java/com/mooncascade/data/respository/ObservationDataRepository.kt#L56))
 - [x] Coroutines (**RepeatOnLifeCycle API**)
 - [x] Navigation (**SafeArgs**)
+- [x] Retrofit
 - [x] ViewBinding
 - [x] Material Design
 - [x] Portrait + Landscape
 - [x] SharedElement Transition
 - [x] Coil
 - [x] UnitTests (Mockk): is a library for mocking and verifying Kotlin code.
+- [x] Github CI (Automated Release APK, UnitTests)
 - [x] Network Check
 
 
@@ -68,7 +69,6 @@ If you are using the stable version of AndroidStudio, you need to downgrade the 
 - [ ] Network Error Animation + Retry Button
 - [ ] Add Swipe Refresh
 - [ ] Jetpack Compose Version
-- [ ] Room
 - [ ] MotionLayout
 - [ ] Fragments Split (Converting fat Fragments to small fragments)
 - [ ] MultiThreading (Coroutines ThreadPoolExecutor)

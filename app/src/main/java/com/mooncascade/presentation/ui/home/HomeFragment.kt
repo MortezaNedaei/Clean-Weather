@@ -18,10 +18,10 @@ import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.common.extensions.gone
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
-import com.mooncascade.di.qualifier.MainDispatcher
-import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.databinding.FragmentHomeBinding
+import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.domain.model.ViewState
+import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.presentation.base.BaseFragment
 import com.mooncascade.presentation.ui.home.forecasts.NextDaysForecastsAdapter
 import com.mooncascade.presentation.ui.home.places.PlacesAdapter
@@ -94,17 +94,17 @@ class HomeFragment : BaseFragment() {
         initNextDaysForecastsData()
     }
 
-    private fun initCurrentWeatherData() = viewModel.currentWeatherFlow.observe { currentWeather ->
-        when (currentWeather.status) {
+    private fun initCurrentWeatherData() = viewModel.observationsFlow.observe { response ->
+        when (response.status) {
             ViewState.Status.SUCCESS -> {
                 binding.includeCurrentWeather.includeLoading.progressBar.gone()
                 binding.includeNearbyPlaces.includeLoading.progressBar.gone()
-                placesAdapter.submitList(currentWeather.data?.observations)
+                placesAdapter.submitList(response.data)
 
                 // TODO: which city (observation) should be shown as current? maybe its better to
                 //  show current location weather using Google Maps Location.
                 //  But we are showing a specific location for now
-                currentWeather.data?.observations
+                response.data
                     ?.find { it.wmocode == Constants.LOCATION.CODE_TARTU }
                     ?.let {
                         initCurrentWeatherView(it)
@@ -114,7 +114,7 @@ class HomeFragment : BaseFragment() {
             ViewState.Status.ERROR -> {
                 binding.includeCurrentWeather.includeLoading.progressBar.gone()
                 binding.includeNearbyPlaces.includeLoading.progressBar.gone()
-                snack(currentWeather.message ?: "")
+                snack(response.message ?: "")
             }
             ViewState.Status.LOADING -> {
                 binding.includeCurrentWeather.includeLoading.progressBar.visible()
@@ -124,7 +124,8 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun initCurrentWeatherView(data: ObservationEntity) = data.run {
+
+    private fun initCurrentWeatherView(data: Observation) = data.run {
 
         binding.includeCurrentWeather.apply {
             tvCityName.text = name

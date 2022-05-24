@@ -16,7 +16,7 @@
             app:destination="@id/PlaceDetailsFragment">
             <argument
                 android:name="item"
-                app:argType="com.mooncascade.data.entity.current.ObservationEntity"
+                app:argType="com.mooncascade.domain.model.current.Observation"
                 app:nullable="false" />
             <argument
                 android:name="transitionName"
@@ -32,7 +32,7 @@
 
         <argument
             android:name="item"
-            app:argType="com.mooncascade.data.entity.current.ObservationEntity"
+            app:argType="com.mooncascade.domain.model.current.Observation"
             app:nullable="false" />
 
         <argument

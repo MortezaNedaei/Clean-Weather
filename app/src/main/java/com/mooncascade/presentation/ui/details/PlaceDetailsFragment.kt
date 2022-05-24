@@ -16,11 +16,11 @@ import com.mooncascade.common.extensions.onStateChangedListener
 import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
 import com.mooncascade.common.materialContainerTransform
-import com.mooncascade.data.entity.location.LocationEntity
-import com.mooncascade.data.network.WeatherApi
+import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
 import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.domain.model.ViewState
+import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -132,7 +132,7 @@ class PlaceDetailsFragment : BaseFragment() {
     /**
      * show new API call data in the view
      */
-    private fun dispatchNewDataToView(data: LocationEntity?) = data?.let { location ->
+    private fun dispatchNewDataToView(data: Location?) = data?.let { location ->
         with(location) {
             binding.tvVisibility.text = getString(R.string.format_visibility2, visibility)
             binding.tvWindDirection.text = getString(

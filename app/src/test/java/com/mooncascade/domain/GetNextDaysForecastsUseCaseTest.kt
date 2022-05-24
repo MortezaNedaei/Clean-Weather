@@ -1,10 +1,10 @@
 package com.mooncascade.domain
 
 import com.google.gson.Gson
-import com.mooncascade.data.entity.forecast.NextDaysForecastEntity
-import com.mooncascade.data.respository.WeatherDataRepository
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
+import com.mooncascade.domain.model.forecast.Forecast
 import com.mooncascade.domain.model.mock.nextDaysForecastsMockData
+import com.mooncascade.domain.respository.ForecastRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,26 +14,25 @@ import org.junit.Test
 
 class GetNextDaysForecastsUseCaseTest {
 
-    private val repository = mockk<WeatherDataRepository>()
+    private val repository = mockk<ForecastRepository>()
     private val coroutineDispatcher = mockk<CoroutineDispatcher>()
-    private val nextDaysForecastsUseCase = GetNextDaysForecastsUseCase(
+    private val useCase = GetNextDaysForecastsUseCase(
         repository, coroutineDispatcher
     )
 
 
     @Test
-    fun `should return next days forecasts from WeatherRepository if no error`() {
+    fun `should return next days forecasts from ForecastRepository if no error`() {
 
-        val weatherEntity =
-            Gson().fromJson(
-                nextDaysForecastsMockData,
-                NextDaysForecastEntity::class.java
-            )
-        coEvery { repository.getNextDaysForecasts() } returns flowOf(Result.success(weatherEntity))
+        val model: List<Forecast> =
+            Gson().fromJson(nextDaysForecastsMockData, Array<Forecast>::class.java)
+                .toList()
+
+        coEvery { repository.fetchForecasts() } returns flowOf(Result.success(model))
 
         suspend {
-            val response = nextDaysForecastsUseCase.invoke()
-            assertEquals(response, flowOf(Result.success(weatherEntity)))
+            val response = useCase.invoke()
+            assertEquals(response, flowOf(Result.success(model)))
         }
     }
 

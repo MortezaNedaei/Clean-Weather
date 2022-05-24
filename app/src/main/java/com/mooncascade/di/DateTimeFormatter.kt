@@ -1,8 +1,6 @@
 package com.mooncascade.di
 
-import android.content.Context
 import com.mooncascade.di.qualifier.ApplicationScope
-import dagger.hilt.android.qualifiers.ActivityContext
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -12,9 +10,7 @@ import javax.inject.Inject
  * Used as String formatter to show dates in a human readable format.
  */
 @ApplicationScope
-class DateTimeFormatter @Inject constructor(
-    @ActivityContext private val context: Context
-) {
+class DateTimeFormatter @Inject constructor() {
 
     companion object {
         const val TAG = "DateFormatter"

@@ -1,8 +1,8 @@
 package com.mooncascade.domain.interactor
 
 import com.mooncascade.di.qualifier.IoDispatcher
-import com.mooncascade.data.entity.forecast.NextDaysForecastEntity
-import com.mooncascade.data.respository.WeatherDataRepository
+import com.mooncascade.domain.model.forecast.Forecast
+import com.mooncascade.domain.respository.ForecastRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -14,10 +14,10 @@ import javax.inject.Inject
 class ForecastParams
 
 class GetNextDaysForecastsUseCase @Inject constructor(
-    private val repository: WeatherDataRepository,
+    private val repository: ForecastRepository,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
-) : UseCase<ForecastParams?, Flow<Result<NextDaysForecastEntity>>>(coroutineDispatcher) {
+) : UseCase<ForecastParams?, Flow<Result<List<Forecast>?>>>(coroutineDispatcher) {
 
-    override suspend fun execute(parameters: ForecastParams?): Flow<Result<NextDaysForecastEntity>> =
-        repository.getNextDaysForecasts()
+    override suspend fun execute(parameters: ForecastParams?): Flow<Result<List<Forecast>?>> =
+        repository.fetchForecasts()
 }

@@ -1,6 +1,7 @@
 package com.mooncascade.data.cache.datastore
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.mapper.forecast.toDomain
 import com.mooncascade.data.mapper.forecast.toEntity
 import com.mooncascade.di.qualifier.IoDispatcher
@@ -17,8 +18,6 @@ class ForecastLocalDataSourceImp @Inject constructor(
     private val dataStore: ForecastDataStore,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ForecastLocalDataSource {
-
-    private val TAG = ForecastLocalDataSourceImp::class.java.simpleName
 
 
     override suspend fun getForecasts(): Flow<List<Forecast>> {

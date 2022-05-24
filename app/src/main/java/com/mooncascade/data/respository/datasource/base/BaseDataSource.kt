@@ -1,6 +1,7 @@
 package com.mooncascade.data.respository.datasource.base
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.respository.datasource.base.BaseDataSource.ErrorType.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,9 +11,6 @@ import retrofit2.Response
 
 abstract class BaseDataSource {
 
-    companion object {
-        const val TAG = "BaseDataSource"
-    }
 
     /**
      * received the api call response and return the flow of the response with success and failure status

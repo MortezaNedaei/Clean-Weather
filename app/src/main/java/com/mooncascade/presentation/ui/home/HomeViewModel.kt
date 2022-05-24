@@ -1,6 +1,7 @@
 package com.mooncascade.presentation.ui.home
 
 import androidx.lifecycle.viewModelScope
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
 import com.mooncascade.domain.interactor.GetObservationsUseCase
@@ -23,9 +24,6 @@ class HomeViewModel @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-    companion object {
-        private const val TAG = "HomeViewModel"
-    }
 
     private val _observationsFlow =
         MutableStateFlow<ViewState<List<Observation>>>(ViewState.Idle)

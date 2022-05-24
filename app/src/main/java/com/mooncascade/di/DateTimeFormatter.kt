@@ -12,10 +12,6 @@ import javax.inject.Inject
 @ApplicationScope
 class DateTimeFormatter @Inject constructor() {
 
-    companion object {
-        const val TAG = "DateFormatter"
-    }
-
 
     private val formatter = SimpleDateFormat("yyyy-MM-dd") // 2022-05-16
     private val formatterWeekday = SimpleDateFormat("EEEE") // Tuesday

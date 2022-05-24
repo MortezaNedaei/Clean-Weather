@@ -1,6 +1,7 @@
 package com.mooncascade.data.cache.datastore
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.mapper.observation.toDomain
 import com.mooncascade.data.mapper.observation.toEntity
 import com.mooncascade.di.qualifier.IoDispatcher
@@ -17,8 +18,6 @@ class ObservationLocalDataSourceImp @Inject constructor(
     private val dataStore: ObservationDataStore,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ObservationLocalDataSource {
-
-    private val TAG = ObservationLocalDataSourceImp::class.java.simpleName
 
 
     override suspend fun getObservations(): Flow<List<Observation>> {

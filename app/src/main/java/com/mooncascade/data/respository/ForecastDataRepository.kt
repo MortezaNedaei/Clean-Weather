@@ -1,6 +1,7 @@
 package com.mooncascade.data.respository
 
 import android.util.Log
+import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.cache.datastore.ForecastLocalDataSourceImp
 import com.mooncascade.data.network.datasource.ForecastRemoteDataSourceImp
 import com.mooncascade.data.respository.datasource.base.BaseDataSource
@@ -20,9 +21,6 @@ class ForecastDataRepository @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseDataSource(), ForecastRepository {
 
-    companion object {
-        private const val TAG = "ForecastDataRepository"
-    }
 
     override suspend fun fetchForecasts(strategy: CacheStrategy): Flow<Result<List<Forecast>?>> {
         return fetchForecastsByStrategy(strategy)

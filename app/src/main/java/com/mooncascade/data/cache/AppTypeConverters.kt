@@ -4,14 +4,13 @@ import android.util.Log
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.mooncascade.common.extensions.TAG
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 
 object AppTypeConverters {
-
-    private val TAG = AppTypeConverters::class.java.simpleName
 
     @TypeConverter
     fun longToDate(value: Long?): Date? {

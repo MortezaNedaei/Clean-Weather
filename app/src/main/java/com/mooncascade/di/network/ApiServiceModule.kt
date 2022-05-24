@@ -1,7 +1,7 @@
 package com.mooncascade.di.network
 
 
-import com.mooncascade.data.network.WeatherApi
+import com.mooncascade.data.network.service.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

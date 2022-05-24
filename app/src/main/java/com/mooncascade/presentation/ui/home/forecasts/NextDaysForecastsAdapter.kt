@@ -6,19 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mooncascade.R
-import com.mooncascade.di.DateTimeFormatter
-import com.mooncascade.data.entity.forecast.ForecastEntity
 import com.mooncascade.databinding.ItemNextDayForecastBinding
+import com.mooncascade.di.DateTimeFormatter
 import com.mooncascade.domain.model.WeatherType
+import com.mooncascade.domain.model.forecast.Forecast
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
 class NextDaysForecastsAdapter @Inject constructor(
     private val dateFormatter: DateTimeFormatter
-) : ListAdapter<ForecastEntity, NextDaysForecastsAdapter.ViewHolder>(ForecastDiffCallback()) {
+) : ListAdapter<Forecast, NextDaysForecastsAdapter.ViewHolder>(ForecastDiffCallback()) {
 
-    var onClickListener: ((ForecastEntity) -> Unit)? = null
+    var onClickListener: ((Forecast) -> Unit)? = null
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -36,7 +36,7 @@ class NextDaysForecastsAdapter @Inject constructor(
     inner class ViewHolder internal constructor(private val binding: ItemNextDayForecastBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ForecastEntity) = item.run {
+        fun bind(item: Forecast) = item.run {
 
             binding.tvName.text =
                 dateFormatter.parseDateToWeekdayFormat(date!!)
@@ -80,18 +80,18 @@ class NextDaysForecastsAdapter @Inject constructor(
 
 }
 
-class ForecastDiffCallback @Inject constructor() : DiffUtil.ItemCallback<ForecastEntity>() {
+class ForecastDiffCallback @Inject constructor() : DiffUtil.ItemCallback<Forecast>() {
 
     override fun areItemsTheSame(
-        oldItem: ForecastEntity,
-        newItem: ForecastEntity
+        oldItem: Forecast,
+        newItem: Forecast
     ): Boolean {
         return oldItem.date == newItem.date
     }
 
     override fun areContentsTheSame(
-        oldItem: ForecastEntity,
-        newItem: ForecastEntity
+        oldItem: Forecast,
+        newItem: Forecast
     ): Boolean {
         return oldItem == newItem
     }

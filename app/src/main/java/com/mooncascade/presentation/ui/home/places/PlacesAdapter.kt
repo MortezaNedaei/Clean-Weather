@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.mooncascade.R
-import com.mooncascade.data.entity.current.ObservationEntity
 import com.mooncascade.databinding.ItemPlaceBinding
+import com.mooncascade.domain.model.current.Observation
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
 class PlacesAdapter @Inject constructor(
-) : ListAdapter<ObservationEntity, PlacesAdapter.ViewHolder>(PlaceDiffCallback()) {
+) : ListAdapter<Observation, PlacesAdapter.ViewHolder>(PlaceDiffCallback()) {
 
     /**
      * navigates to the selected place with the given observation and the shared element transition id
      */
-    var onClickListener: ((ObservationEntity, MaterialCardView) -> Unit)? = null
+    var onClickListener: ((Observation, MaterialCardView) -> Unit)? = null
 
     /**
      * opens the GoogleMap app with the given observation
      */
-    var onMapClickListener: ((ObservationEntity) -> Unit)? = null
+    var onMapClickListener: ((Observation) -> Unit)? = null
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -42,7 +42,7 @@ class PlacesAdapter @Inject constructor(
     inner class ViewHolder internal constructor(private val binding: ItemPlaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ObservationEntity) = item.run {
+        fun bind(item: Observation) = item.run {
             binding.crdItem.transitionName = name
             binding.tvName.text = name
             binding.tvTemp.text =
@@ -67,18 +67,18 @@ class PlacesAdapter @Inject constructor(
 
 }
 
-class PlaceDiffCallback @Inject constructor() : DiffUtil.ItemCallback<ObservationEntity>() {
+class PlaceDiffCallback @Inject constructor() : DiffUtil.ItemCallback<Observation>() {
 
     override fun areItemsTheSame(
-        oldItem: ObservationEntity,
-        newItem: ObservationEntity
+        oldItem: Observation,
+        newItem: Observation
     ): Boolean {
         return oldItem.wmocode == newItem.wmocode
     }
 
     override fun areContentsTheSame(
-        oldItem: ObservationEntity,
-        newItem: ObservationEntity
+        oldItem: Observation,
+        newItem: Observation
     ): Boolean {
         return oldItem == newItem
     }

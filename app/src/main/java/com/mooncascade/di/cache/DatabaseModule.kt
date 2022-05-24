@@ -25,5 +25,8 @@ object DatabaseModule {
     }
 
     @Provides
-    fun providePlaceDao(database: AppDatabase) = database.placeDao()
+    fun provideObservationDao(database: AppDatabase) = database.observationDao()
+
+    @Provides
+    fun provideForecastDao(database: AppDatabase) = database.forecastDao()
 }

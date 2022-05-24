@@ -3,13 +3,16 @@ package com.mooncascade.data.cache
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.mooncascade.data.cache.place.PlaceDao
-import com.mooncascade.data.entity.forecast.PlaceEntity
+import com.mooncascade.data.cache.dao.ForecastDao
+import com.mooncascade.data.cache.dao.ObservationDao
+import com.mooncascade.data.entity.observation.ObservationEntity
+import com.mooncascade.data.entity.forecast.ForecastEntity
 
 
 @Database(
     entities = [
-        PlaceEntity::class,
+        ObservationEntity::class,
+        ForecastEntity::class,
     ],
     version = 1,
     exportSchema = false
@@ -21,5 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
         const val DATABASE_NAME = "clean_weather.db"
     }
 
-    abstract fun placeDao(): PlaceDao
+    abstract fun observationDao(): ObservationDao
+
+    abstract fun forecastDao(): ForecastDao
 }

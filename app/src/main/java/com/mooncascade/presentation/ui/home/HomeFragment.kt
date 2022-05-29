@@ -10,6 +10,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.transition.Hold
 import com.mooncascade.R
 import com.mooncascade.common.extensions.contexts.navigateTo
@@ -20,7 +21,6 @@ import com.mooncascade.common.extensions.snack
 import com.mooncascade.common.extensions.visible
 import com.mooncascade.databinding.FragmentHomeBinding
 import com.mooncascade.di.qualifier.MainDispatcher
-import com.mooncascade.domain.model.ViewState
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.presentation.base.BaseFragment
 import com.mooncascade.presentation.ui.home.forecasts.NextDaysForecastsAdapter
@@ -73,10 +73,48 @@ class HomeFragment : BaseFragment() {
 
         lifecycleScope.launch(coroutineDispatcher) {
             initView()
-            initData()
+            subscribeUi()
         }
 
     }
+
+    private fun subscribeUi() = viewModel.uiState.observe { uiState ->
+        with(uiState) {
+            setObservationsUiState(observationsUiState)
+            setForecastsUiState(forecastsUiState)
+            error?.let {
+                snack(it)
+            }
+        }
+
+    }
+
+    private fun setForecastsUiState(forecastsUiState: ForecastsUiState) = forecastsUiState.let {
+        nextDaysForecastsAdapter.submitList(it.forecasts)
+        updateProgressBar(
+            it.isLoading,
+            binding.includeNextDaysForecasts.includeLoading.progressBar
+        )
+    }
+
+
+    private fun setObservationsUiState(observationsUiState: ObservationsUiState) =
+        observationsUiState.let { uiState ->
+            placesAdapter.submitList(uiState.observations)
+            updateProgressBar(
+                uiState.isLoading,
+                binding.includeCurrentWeather.animationView,
+                binding.includeNearbyPlaces.includeLoading.progressBar
+            )
+
+            // TODO: which city (observation) should be shown as current? maybe its better to
+            //  show current location weather using Google Maps Location.
+            //  But we are showing a specific location for now
+            uiState.observations?.find { it.wmocode == Constants.LOCATION.CODE_TARTU }
+                ?.let {
+                    initCurrentWeatherView(it)
+                }
+        }
 
     private fun initView() {
 
@@ -85,43 +123,6 @@ class HomeFragment : BaseFragment() {
         initNearbyPlacesView()
 
         initClicks()
-    }
-
-    private fun initData() {
-
-        initCurrentWeatherData()
-
-        initNextDaysForecastsData()
-    }
-
-    private fun initCurrentWeatherData() = viewModel.observationsFlow.observe { response ->
-        when (response.status) {
-            ViewState.Status.SUCCESS -> {
-                binding.includeCurrentWeather.includeLoading.progressBar.gone()
-                binding.includeNearbyPlaces.includeLoading.progressBar.gone()
-                placesAdapter.submitList(response.data)
-
-                // TODO: which city (observation) should be shown as current? maybe its better to
-                //  show current location weather using Google Maps Location.
-                //  But we are showing a specific location for now
-                response.data
-                    ?.find { it.wmocode == Constants.LOCATION.CODE_TARTU }
-                    ?.let {
-                        initCurrentWeatherView(it)
-                    }
-
-            }
-            ViewState.Status.ERROR -> {
-                binding.includeCurrentWeather.includeLoading.progressBar.gone()
-                binding.includeNearbyPlaces.includeLoading.progressBar.gone()
-                snack(response.message ?: "")
-            }
-            ViewState.Status.LOADING -> {
-                binding.includeCurrentWeather.includeLoading.progressBar.visible()
-                binding.includeNearbyPlaces.includeLoading.progressBar.visible()
-            }
-            else -> {}
-        }
     }
 
 
@@ -156,25 +157,6 @@ class HomeFragment : BaseFragment() {
             )
         }
     }
-
-
-    private fun initNextDaysForecastsData() = viewModel.nextDaysForecastsFlow.observe { forecasts ->
-        when (forecasts.status) {
-            ViewState.Status.SUCCESS -> {
-                binding.includeNextDaysForecasts.includeLoading.progressBar.gone()
-                nextDaysForecastsAdapter.submitList(forecasts.data)
-            }
-            ViewState.Status.ERROR -> {
-                binding.includeNextDaysForecasts.includeLoading.progressBar.gone()
-                snack(forecasts.message ?: "")
-            }
-            ViewState.Status.LOADING -> {
-                binding.includeNextDaysForecasts.includeLoading.progressBar.visible()
-            }
-            else -> {}
-        }
-    }
-
 
     private fun initNextDaysForecastsView() {
         binding.includeNextDaysForecasts.rvNextDaysForecasts.adapter =
@@ -219,13 +201,25 @@ class HomeFragment : BaseFragment() {
 
     private fun initClicks() {
         binding.fabDate.setOnClickListener {
-            // TODO: create additional dialog fragment to show date picker
             snack("will be implemented soon")
         }
 
         binding.tvPlacesViewMore.setOnClickListener {
-            // TODO: create additional fragment to show list of nearby places in vertical list
             snack("will be implemented soon")
+        }
+    }
+
+    private fun updateProgressBar(isLoading: Boolean, vararg loadingView: LottieAnimationView) {
+        if (isLoading) {
+            loadingView.forEach {
+                it.visible()
+                it.playAnimation()
+            }
+        } else {
+            loadingView.forEach {
+                it.cancelAnimation()
+                it.gone()
+            }
         }
     }
 

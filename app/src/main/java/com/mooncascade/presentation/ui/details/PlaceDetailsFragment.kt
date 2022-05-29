@@ -19,7 +19,7 @@ import com.mooncascade.common.materialContainerTransform
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
 import com.mooncascade.di.qualifier.MainDispatcher
-import com.mooncascade.domain.model.ViewState
+import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,52 +72,29 @@ class PlaceDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-
-        initLocationWeatherData()
+        subscribeUi()
     }
 
-
-    private fun initLocationWeatherData() = viewModel.locationWeatherFlow.observe { forecast ->
-        when (forecast.status) {
-            ViewState.Status.SUCCESS -> {
-                binding.includeLoading.progressBar.gone()
-                dispatchNewDataToView(forecast.data)
+    private fun subscribeUi() = viewModel.uiState.observe { uiState ->
+        with(uiState) {
+            updateProgressBar(isLoading)
+            observation?.let {
+                setObservation(it)
             }
-            ViewState.Status.ERROR -> {
-                binding.includeLoading.progressBar.gone()
-                snack(forecast.message ?: "")
+            location?.let {
+                setLocationDetail(it)
             }
-            ViewState.Status.LOADING -> {
-                binding.includeLoading.progressBar.visible()
+            error?.let {
+                snack(it)
             }
-            else -> {}
         }
+
     }
 
 
     private fun initView() {
 
         initAppBar()
-
-        binding.animationView.setAnimation(
-            viewModel.getCurrentWeatherAnimation(place.phenomenon)
-        )
-        binding.tvCityName.text = place.name.also { binding.tvCityName2.text = it }
-        binding.tvTemp.text = viewModel.getLocationWeatherDegrees(place.airtemperature)
-        binding.tvTemp2.text = viewModel.getLocationWeatherDegrees(place.airtemperature, true)
-        binding.tvWeatherStatus.text = place.phenomenon.also {
-            binding.tvWeatherStatus2.text = getString(R.string.format_weather_status, it)
-        }
-        binding.tvWindSpeed.text =
-            getString(
-                R.string.format_wind_speed,
-                place.windspeed
-            ).also { binding.tvWindSpeed2.text = it }
-        binding.tvAirPressure.text =
-            getString(
-                R.string.format_air_pressure,
-                place.airpressure
-            ).also { binding.tvAirPressure2.text = it }
 
         with(binding.imgCover) {
             val request = ImageRequest.Builder(context)
@@ -130,9 +107,36 @@ class PlaceDetailsFragment : BaseFragment() {
     }
 
     /**
+     * show extra arg data from previous screen
+     */
+    private fun setObservation(data: Observation?) = data?.let { observation ->
+        with(observation) {
+            binding.animationView.setAnimation(
+                viewModel.getCurrentWeatherAnimation(phenomenon)
+            )
+            binding.tvCityName.text = name.also { binding.tvCityName2.text = it }
+            binding.tvTemp.text = viewModel.getLocationWeatherDegrees(airtemperature)
+            binding.tvTemp2.text = viewModel.getLocationWeatherDegrees(airtemperature, true)
+            binding.tvWeatherStatus.text = phenomenon.also {
+                binding.tvWeatherStatus2.text = getString(R.string.format_weather_status, it)
+            }
+            binding.tvWindSpeed.text =
+                getString(
+                    R.string.format_wind_speed,
+                    windspeed
+                ).also { binding.tvWindSpeed2.text = it }
+            binding.tvAirPressure.text =
+                getString(
+                    R.string.format_air_pressure,
+                    airpressure
+                ).also { binding.tvAirPressure2.text = it }
+        }
+    }
+
+    /**
      * show new API call data in the view
      */
-    private fun dispatchNewDataToView(data: Location?) = data?.let { location ->
+    private fun setLocationDetail(data: Location?) = data?.let { location ->
         with(location) {
             binding.tvVisibility.text = getString(R.string.format_visibility2, visibility)
             binding.tvWindDirection.text = getString(
@@ -161,6 +165,14 @@ class PlaceDetailsFragment : BaseFragment() {
             binding.tvWeatherStatus2.gone()
             binding.tvAirPressure2.gone()
             binding.tvWindSpeed2.gone()
+        }
+    }
+
+    private fun updateProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.includeLoading.progressBar.visible()
+        } else {
+            binding.includeLoading.progressBar.gone()
         }
     }
 

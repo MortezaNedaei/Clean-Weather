@@ -1,19 +1,17 @@
 package com.mooncascade.presentation.ui.home
 
 import androidx.lifecycle.viewModelScope
-import com.mooncascade.common.extensions.TAG
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
 import com.mooncascade.domain.interactor.GetObservationsUseCase
-import com.mooncascade.domain.model.ViewState
+import com.mooncascade.domain.model.DataState
 import com.mooncascade.domain.model.WeatherType
-import com.mooncascade.domain.model.current.Observation
-import com.mooncascade.domain.model.forecast.Forecast
 import com.mooncascade.presentation.base.BaseViewModel
-import com.mooncascade.presentation.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,15 +22,8 @@ class HomeViewModel @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-
-    private val _observationsFlow =
-        MutableStateFlow<ViewState<List<Observation>>>(ViewState.Idle)
-    val observationsFlow get() = _observationsFlow
-
-
-    private val _nextDaysForecastsFlow =
-        MutableStateFlow<ViewState<List<Forecast>>>(ViewState.Idle)
-    val nextDaysForecastsFlow get() = _nextDaysForecastsFlow
+    private val _uiState = MutableStateFlow(HomeUiState())
+    val uiState get() = _uiState.asStateFlow()
 
     init {
         getObservations()
@@ -40,31 +31,71 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getObservations() = viewModelScope.launch(coroutineDispatcher) {
-        _observationsFlow.value = ViewState.Loading
         observationsUseCase.invoke()
             .collect { data ->
-                _observationsFlow.value =
-                    if (data.isSuccess)
-                        ViewState.Success(data.getOrNull())
-                    else
-                        makeError(
-                            data.exceptionOrNull(), TAG, Constants.ERROR_GET_CURRENT_WEATHER
+                when (data) {
+                    is DataState.Loading -> _uiState.update {
+                        it.copy(
+                            observationsUiState = it.observationsUiState.copy(
+                                isLoading = true
+                            )
                         )
+                    }
+                    is DataState.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                observationsUiState = it.observationsUiState.copy(
+                                    observations = data.data,
+                                    isLoading = false
+                                ),
+                            )
+                        }
+                    }
+                    is DataState.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                observationsUiState = it.observationsUiState.copy(isLoading = false),
+                                error = data.message,
+                            )
+                        }
+                    }
+                    else -> {}
+                }
             }
     }
 
 
     private fun getNextDaysForecasts() = viewModelScope.launch(coroutineDispatcher) {
-        _nextDaysForecastsFlow.value = ViewState.Loading
         nextDaysForecastsUseCase.invoke()
             .collect { data ->
-                _nextDaysForecastsFlow.value =
-                    if (data.isSuccess)
-                        ViewState.Success(data.getOrNull() ?: emptyList())
-                    else
-                        makeError(
-                            data.exceptionOrNull(), TAG, Constants.ERROR_GET_FORECASTS
+                when (data) {
+                    is DataState.Loading -> _uiState.update {
+                        it.copy(
+                            forecastsUiState = it.forecastsUiState.copy(
+                                isLoading = true
+                            )
                         )
+                    }
+                    is DataState.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                forecastsUiState = it.forecastsUiState.copy(
+                                    forecasts = data.data,
+                                    isLoading = false
+                                ),
+                            )
+                        }
+                    }
+                    is DataState.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                forecastsUiState = it.forecastsUiState.copy(isLoading = false),
+                                error = data.message,
+                            )
+                        }
+                    }
+                    else -> {}
+                }
             }
     }
 

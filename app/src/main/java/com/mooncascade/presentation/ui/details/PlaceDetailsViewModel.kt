@@ -5,23 +5,22 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mooncascade.R
-import com.mooncascade.common.extensions.TAG
 import com.mooncascade.common.extensions.convertNumberToWords
 import com.mooncascade.di.qualifier.IoDispatcher
 import com.mooncascade.domain.interactor.GetLocationDetailsUseCase
 import com.mooncascade.domain.interactor.LocationWeatherParams
-import com.mooncascade.domain.model.ViewState
+import com.mooncascade.domain.model.DataState
 import com.mooncascade.domain.model.WeatherType
 import com.mooncascade.domain.model.current.Observation
-import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseViewModel
-import com.mooncascade.presentation.utils.Constants
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
@@ -42,12 +41,22 @@ class PlaceDetailsViewModel @AssistedInject constructor(
         savedStateHandle.get<Observation>("item")
     }
 
-    private val _locationWeatherFlow =
-        MutableStateFlow<ViewState<Location>>(ViewState.Idle)
-    val locationWeatherFlow get() = _locationWeatherFlow
+    private val _uiState = MutableStateFlow(PlaceDetailsUiState())
+    val uiState get() = _uiState.asStateFlow()
+
 
     init {
+        getExtraLocationData()
         getLocationWeather(argument?.wmocode)
+    }
+
+    private fun getExtraLocationData() = viewModelScope.launch(coroutineDispatcher) {
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                observation = argument
+            )
+        }
     }
 
     private fun getLocationWeather(locationId: String?) =
@@ -56,16 +65,28 @@ class PlaceDetailsViewModel @AssistedInject constructor(
             // We can't make a request when there is no id for this place
             // TODO: add a ui test to check this
             if (locationId.isNullOrEmpty()) return@launch
-            _locationWeatherFlow.value = ViewState.Loading
             useCase.invoke(LocationWeatherParams(locationId.toInt()))
                 .collect { data ->
-                    _locationWeatherFlow.value =
-                        if (data.isSuccess)
-                            ViewState.Success(data.getOrNull())
-                        else
-                            makeError(
-                                data.exceptionOrNull(), TAG, Constants.ERROR_GET_LOCATION_FORECAST
-                            )
+                    when (data) {
+                        is DataState.Loading -> _uiState.update { it.copy(isLoading = true) }
+                        is DataState.Success -> {
+                            _uiState.update {
+                                it.copy(
+                                    isLoading = false,
+                                    location = data.data,
+                                )
+                            }
+                        }
+                        is DataState.Error -> {
+                            _uiState.update {
+                                it.copy(
+                                    isLoading = false,
+                                    error = data.message,
+                                )
+                            }
+                        }
+                        else -> {}
+                    }
                 }
         }
 

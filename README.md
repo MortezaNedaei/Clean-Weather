@@ -1,5 +1,7 @@
 ## Description
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/39ad444aaac74fa995811096eebe8604)](https://app.codacy.com/gh/MortezaNedaei/Clean-Weather?utm_source=github.com&utm_medium=referral&utm_content=MortezaNedaei/Clean-Weather&utm_campaign=Badge_Grade_Settings)
+
 This is a weather forecast application based on the modern Android development tools
 
 ### Want to see the task assignment?

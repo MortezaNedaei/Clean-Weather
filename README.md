@@ -1,6 +1,7 @@
 ## Code Quality
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/64667fcd353845edb914b5d59c158d79)](https://www.codacy.com/gh/MortezaNedaei/Clean-Weather/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MortezaNedaei/Clean-Weather&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/mortezanedaei/clean-weather/badge)](https://www.codefactor.io/repository/github/mortezanedaei/clean-weather)
+[![codebeat badge](https://codebeat.co/badges/07421c01-6876-438d-9329-288e54e8fdfe)](https://codebeat.co/projects/github-com-mortezanedaei-clean-weather-main)
 
 ## Description
 

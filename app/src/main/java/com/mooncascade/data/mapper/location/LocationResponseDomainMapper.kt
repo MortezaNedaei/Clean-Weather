@@ -1,4 +1,4 @@
-package com.mooncascade.data.mapper
+package com.mooncascade.data.mapper.location
 
 import com.mooncascade.data.network.entity.location.*
 import com.mooncascade.domain.model.location.*

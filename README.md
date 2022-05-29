@@ -1,3 +1,7 @@
+## Code Quality
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/64667fcd353845edb914b5d59c158d79)](https://www.codacy.com/gh/MortezaNedaei/Clean-Weather/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MortezaNedaei/Clean-Weather&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/mortezanedaei/clean-weather/badge)](https://www.codefactor.io/repository/github/mortezanedaei/clean-weather)
+
 ## Description
 
 This is a weather forecast application based on the modern Android development tools

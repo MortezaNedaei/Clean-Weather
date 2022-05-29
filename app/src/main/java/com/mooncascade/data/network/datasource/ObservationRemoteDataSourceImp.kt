@@ -3,6 +3,7 @@ package com.mooncascade.data.network.datasource
 import android.util.Log
 import com.mooncascade.common.extensions.TAG
 import com.mooncascade.data.mapper.location.toDomain
+import com.mooncascade.data.mapper.toDomain
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.data.respository.datasource.base.BaseDataSource
 import com.mooncascade.data.respository.datasource.observation.ObservationRemoteDataSource

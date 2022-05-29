@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
  */
 context(Fragment)
 fun <T> StateFlow<T>.observe(block: (value: T) -> Unit) {
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             collect { state ->
                 block(state)
@@ -52,7 +53,7 @@ fun <T> StateFlow<T>.observe(block: (value: T) -> Unit) {
  */
 context(Fragment)
 fun <T> StateFlow<T>.observe(vararg block: (value: T) -> Unit) {
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             block.forEach { flow ->
                 launch {

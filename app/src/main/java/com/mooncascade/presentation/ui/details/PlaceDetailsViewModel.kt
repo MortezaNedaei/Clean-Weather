@@ -13,11 +13,15 @@ import com.mooncascade.domain.model.DataState
 import com.mooncascade.domain.model.WeatherType
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.presentation.base.BaseViewModel
+import com.mooncascade.presentation.ui.details.state.PlaceDetailsEffect
+import com.mooncascade.presentation.ui.details.state.PlaceDetailsEvent
+import com.mooncascade.presentation.ui.details.state.PlaceDetailsState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -29,7 +33,7 @@ class PlaceDetailsViewModel @AssistedInject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     @ActivityContext private val context: Context,
     @Assisted private val savedStateHandle: SavedStateHandle,
-) : BaseViewModel() {
+) : BaseViewModel<PlaceDetailsEvent, PlaceDetailsState, PlaceDetailsEffect>() {
 
 
     @AssistedFactory
@@ -41,17 +45,33 @@ class PlaceDetailsViewModel @AssistedInject constructor(
         savedStateHandle.get<Observation>("item")
     }
 
-    private val _uiState = MutableStateFlow(PlaceDetailsUiState())
-    val uiState get() = _uiState.asStateFlow()
-
 
     init {
-        getExtraLocationData()
+        processEvent(eventChannel)
+        viewModelScope.launch(coroutineDispatcher) {
+            onEvent(PlaceDetailsEvent.GetExtraLocation)
+            onEvent(PlaceDetailsEvent.GetLocationDetails(argument?.wmocode))
+        }
+    }
+
+    override fun processEvent(eventChannel: Flow<PlaceDetailsEvent>) {
+        viewModelScope.launch(coroutineDispatcher) {
+            eventChannel.collect { event ->
+                when (event) {
+                    is PlaceDetailsEvent.GetExtraLocation -> getExtraLocationData()
+                    is PlaceDetailsEvent.GetLocationDetails -> getLocationWeather(argument?.wmocode)
+                    is PlaceDetailsEvent.Refresh -> refresh()
+                }
+            }
+        }
+    }
+
+    private fun refresh() {
         getLocationWeather(argument?.wmocode)
     }
 
     private fun getExtraLocationData() = viewModelScope.launch(coroutineDispatcher) {
-        _uiState.update {
+        _viewState.update {
             it.copy(
                 isLoading = false,
                 observation = argument
@@ -68,9 +88,9 @@ class PlaceDetailsViewModel @AssistedInject constructor(
             useCase.invoke(LocationWeatherParams(locationId.toInt()))
                 .collect { data ->
                     when (data) {
-                        is DataState.Loading -> _uiState.update { it.copy(isLoading = true) }
+                        is DataState.Loading -> _viewState.update { it.copy(isLoading = true) }
                         is DataState.Success -> {
-                            _uiState.update {
+                            _viewState.update {
                                 it.copy(
                                     isLoading = false,
                                     location = data.data,
@@ -78,7 +98,7 @@ class PlaceDetailsViewModel @AssistedInject constructor(
                             }
                         }
                         is DataState.Error -> {
-                            _uiState.update {
+                            _viewState.update {
                                 it.copy(
                                     isLoading = false,
                                     error = data.message,
@@ -115,5 +135,7 @@ class PlaceDetailsViewModel @AssistedInject constructor(
             context.resources.getString(R.string.format_temp, temperature)
         }
     }
+
+    override fun initViewState(): PlaceDetailsState = PlaceDetailsState()
 
 }

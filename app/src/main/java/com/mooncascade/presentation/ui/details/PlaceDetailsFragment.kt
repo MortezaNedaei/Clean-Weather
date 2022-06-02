@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.request.CachePolicy
@@ -22,8 +23,11 @@ import com.mooncascade.di.qualifier.MainDispatcher
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseFragment
+import com.mooncascade.presentation.ui.details.state.PlaceDetailsEffect
+import com.mooncascade.presentation.ui.details.state.PlaceDetailsEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -31,7 +35,7 @@ import javax.inject.Inject
  * some data showed in this screen used from previous screen by `safeArgs`, as well some other fetched from network
  */
 @AndroidEntryPoint
-class PlaceDetailsFragment : BaseFragment() {
+class PlaceDetailsFragment : BaseFragment<PlaceDetailsEvent>() {
 
     private var _binding: FragmentPlaceDetailsBinding? = null
     private val binding get() = _binding!!
@@ -75,8 +79,8 @@ class PlaceDetailsFragment : BaseFragment() {
         subscribeUi()
     }
 
-    private fun subscribeUi() = viewModel.uiState.observe { uiState ->
-        with(uiState) {
+    private fun subscribeUi() = viewModel.viewState.observe { viewState ->
+        with(viewState) {
             updateProgressBar(isLoading)
             observation?.let {
                 setObservation(it)
@@ -176,9 +180,22 @@ class PlaceDetailsFragment : BaseFragment() {
         }
     }
 
+    override fun observeViewEffects() {
+        lifecycleScope.launch(coroutineDispatcher) {
+            viewModel.effectChannel.collect {
+                when (it) {
+                    is PlaceDetailsEffect.ShowError -> {
+                        snack(it.message)
+                    }
+                }
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

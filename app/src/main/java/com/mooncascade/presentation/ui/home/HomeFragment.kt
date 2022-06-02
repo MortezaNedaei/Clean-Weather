@@ -25,6 +25,10 @@ import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.presentation.base.BaseFragment
 import com.mooncascade.presentation.ui.home.forecasts.NextDaysForecastsAdapter
 import com.mooncascade.presentation.ui.home.places.PlacesAdapter
+import com.mooncascade.presentation.ui.home.state.ForecastsState
+import com.mooncascade.presentation.ui.home.state.HomeEffect
+import com.mooncascade.presentation.ui.home.state.HomeEvent
+import com.mooncascade.presentation.ui.home.state.ObservationsState
 import com.mooncascade.presentation.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -35,7 +39,7 @@ import javax.inject.Inject
  * This screen, used to show current weather and forecast for next days and nearby places
  */
 @AndroidEntryPoint
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment<HomeEvent>() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -78,10 +82,10 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    private fun subscribeUi() = viewModel.uiState.observe { uiState ->
+    private fun subscribeUi() = viewModel.viewState.observe { uiState ->
         with(uiState) {
-            setObservationsUiState(observationsUiState)
-            setForecastsUiState(forecastsUiState)
+            setObservationsUiState(observationsState)
+            setForecastsUiState(forecastsState)
             error?.let {
                 snack(it)
             }
@@ -89,7 +93,7 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    private fun setForecastsUiState(forecastsUiState: ForecastsUiState) = forecastsUiState.let {
+    private fun setForecastsUiState(forecastsState: ForecastsState) = forecastsState.let {
         nextDaysForecastsAdapter.submitList(it.forecasts)
         updateProgressBar(
             it.isLoading,
@@ -98,8 +102,8 @@ class HomeFragment : BaseFragment() {
     }
 
 
-    private fun setObservationsUiState(observationsUiState: ObservationsUiState) =
-        observationsUiState.let { uiState ->
+    private fun setObservationsUiState(observationsState: ObservationsState) =
+        observationsState.let { uiState ->
             placesAdapter.submitList(uiState.observations)
             updateProgressBar(
                 uiState.isLoading,
@@ -107,7 +111,7 @@ class HomeFragment : BaseFragment() {
                 binding.includeNearbyPlaces.includeLoading.progressBar
             )
 
-            // TODO: which city (observation) should be shown as current? maybe its better to
+            //  which city (observation) should be shown as current? maybe its better to
             //  show current location weather using Google Maps Location.
             //  But we are showing a specific location for now
             uiState.observations?.find { it.wmocode == Constants.LOCATION.CODE_TARTU }
@@ -169,43 +173,30 @@ class HomeFragment : BaseFragment() {
 
     private fun initNearbyPlacesView() {
         binding.includeNearbyPlaces.rvPlaces.adapter = placesAdapter.apply {
-            onMapClickListener = { place ->
-                // Open Google Map
-                startActivity(Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(
-                        "geo:${place.latitude},${place.longitude}?q=${place.name}"
-                    )
-                })
+            onMapClickListener = { observation ->
+                lifecycleScope.launch {
+                    viewModel.onEffect(HomeEffect.NavigateToMap(observation))
+                }
             }
             onClickListener = { place, cardView ->
-                Hold().apply {
-                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                lifecycleScope.launch(coroutineDispatcher) {
+                    viewModel.onEffect(HomeEffect.OnPlaceItemPress(place, cardView))
                 }
-                exitTransition = Hold().apply {
-                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
-                }
-
-                reenterTransition = Hold().apply {
-                    duration = resources.getInteger(R.integer.anim_duration_large).toLong()
-                }
-
-                val extras = FragmentNavigatorExtras(cardView to cardView.transitionName)
-                HomeFragmentDirections.actionHomeFragmentToPlaceDetailsFragment(
-                    place,
-                    cardView.transitionName
-                )
-                    .also { directions -> navigateTo(directions, extras) }
             }
         }
     }
 
     private fun initClicks() {
         binding.fabDate.setOnClickListener {
-            snack("will be implemented soon")
+            lifecycleScope.launch(coroutineDispatcher) {
+                viewModel.onEffect(HomeEffect.OnFabPress)
+            }
         }
 
         binding.tvPlacesViewMore.setOnClickListener {
-            snack("will be implemented soon")
+            lifecycleScope.launch(coroutineDispatcher) {
+                viewModel.onEffect(HomeEffect.OnViewMorePlacesPress)
+            }
         }
     }
 
@@ -223,8 +214,51 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    override fun observeViewEffects() {
+        lifecycleScope.launch(coroutineDispatcher) {
+            viewModel.effectChannel.collect {
+                when (it) {
+                    is HomeEffect.OnFabPress -> snack("will be implemented soon")
+                    is HomeEffect.OnViewMorePlacesPress -> snack("will be implemented soon")
+                    is HomeEffect.NavigateToMap -> {
+                        // Open Google Map
+                        startActivity(Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(
+                                "geo:${it.observation.latitude},${it.observation.longitude}?q=${it.observation.name}"
+                            )
+                        })
+                    }
+                    is HomeEffect.OnPlaceItemPress -> {
+                        Hold().apply {
+                            duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                        }
+                        exitTransition = Hold().apply {
+                            duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                        }
+
+                        reenterTransition = Hold().apply {
+                            duration = resources.getInteger(R.integer.anim_duration_large).toLong()
+                        }
+
+                        val extras =
+                            FragmentNavigatorExtras(it.cardView to it.cardView.transitionName)
+                        HomeFragmentDirections.actionHomeFragmentToPlaceDetailsFragment(
+                            it.observation,
+                            it.cardView.transitionName
+                        )
+                            .also { directions -> navigateTo(directions, extras) }
+                    }
+                    is HomeEffect.ShowError -> snack(it.message)
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }

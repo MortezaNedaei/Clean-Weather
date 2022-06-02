@@ -1,4 +1,4 @@
-package com.mooncascade.presentation.ui.home
+package com.mooncascade.presentation.ui.home.state
 
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.domain.model.forecast.Forecast
@@ -6,19 +6,19 @@ import com.mooncascade.domain.model.forecast.Forecast
 /**
  * Home UI state
  */
-data class HomeUiState(
+data class HomeState(
     // This states should not be null. because we use `copy()` command to update the state
-    val observationsUiState: ObservationsUiState = ObservationsUiState(),
-    val forecastsUiState: ForecastsUiState = ForecastsUiState(),
+    val observationsState: ObservationsState = ObservationsState(),
+    val forecastsState: ForecastsState = ForecastsState(),
     val error: String? = null,
 )
 
-data class ObservationsUiState(
+data class ObservationsState(
     val isLoading: Boolean = false,
     val observations: List<Observation>? = null,
 )
 
-data class ForecastsUiState(
+data class ForecastsState(
     val isLoading: Boolean = false,
     val forecasts: List<Forecast>? = null,
 )

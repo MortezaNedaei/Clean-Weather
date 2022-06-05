@@ -1,5 +1,6 @@
 package com.mooncascade.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.mooncascade.di.network.NetworkModule
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.BuildConfig
@@ -7,13 +8,17 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -50,8 +55,10 @@ class NetworkModuleTest {
     }
 
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun constructWithInterceptor(interceptorUnderTest: Interceptor) =
         constructRetrofit(
+            Json.asConverterFactory("application/json".toMediaType()),
             MoshiConverterFactory.create(
                 Moshi.Builder()
                     .addLast(KotlinJsonAdapterFactory())
@@ -62,10 +69,12 @@ class NetworkModuleTest {
 
 
     private fun constructRetrofit(
+        serializationConverterFactory: Converter.Factory,
         moshiConverterFactory: MoshiConverterFactory,
         okHttpClient: OkHttpClient,
     ): Retrofit {
         return NetworkModule.provideRetrofit(
+            serializationConverterFactory,
             moshiConverterFactory,
             okHttpClient,
             mockWebServer.url(BuildConfig.API_BASE_URL).toString()

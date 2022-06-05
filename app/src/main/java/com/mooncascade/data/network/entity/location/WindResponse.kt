@@ -2,12 +2,14 @@ package com.mooncascade.data.network.entity.location
 
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
+@Serializable
 data class WindResponse(
-    @SerializedName("units")
+    @SerialName("units")
     val units: String?,
-    @SerializedName("value")
+    @SerialName("value")
     val value: String?
 )

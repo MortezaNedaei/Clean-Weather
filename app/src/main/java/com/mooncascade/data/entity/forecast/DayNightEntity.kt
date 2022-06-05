@@ -9,8 +9,8 @@ data class DayNightEntity(
     val phenomenon: String?,
 //    val places: List<PlaceEntity>?,
     val sea: String?,
-    val tempmax: Int?,
-    val tempmin: Int?,
+    val tempmax: Double?,
+    val tempmin: Double?,
     val text: String?,
 //    val winds: List<WindEntity>?
 )

@@ -7,6 +7,6 @@ import androidx.annotation.Keep
 data class WindEntity(
     val direction: String?,
     val name: String?,
-    val speedmax: Int?,
-    val speedmin: Int?
+    val speedmax: Double?,
+    val speedmin: Double?
 )

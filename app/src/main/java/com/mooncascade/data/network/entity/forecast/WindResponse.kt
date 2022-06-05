@@ -2,16 +2,18 @@ package com.mooncascade.data.network.entity.forecast
 
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
+@Serializable
 data class WindResponse(
-    @SerializedName("direction")
+    @SerialName("direction")
     val direction: String?,
-    @SerializedName("name")
+    @SerialName("name")
     val name: String?,
-    @SerializedName("speedmax")
-    val speedmax: Int?,
-    @SerializedName("speedmin")
-    val speedmin: Int?
+    @SerialName("speedmax")
+    val speedmax: Double?,
+    @SerialName("speedmin")
+    val speedmin: Double?
 )

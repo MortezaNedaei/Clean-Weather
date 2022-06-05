@@ -1,6 +1,5 @@
 package com.mooncascade.domain
 
-import com.google.gson.Gson
 import com.mooncascade.domain.interactor.GetLocationDetailsUseCase
 import com.mooncascade.domain.interactor.LocationWeatherParams
 import com.mooncascade.domain.model.location.Location
@@ -10,6 +9,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -25,11 +26,8 @@ class GetLocationDetailsUseCaseTest {
     @Test
     fun `should return location weather from LocationDetailsRepository if no error`() {
 
-        val model =
-            Gson().fromJson(
-                locationWeatherMockData,
-                Location::class.java
-            )
+        val model = Json.decodeFromString<Location?>(locationWeatherMockData)
+
         coEvery { repository.fetchLocationWeather(0) } returns flowOf(Result.success(model))
 
         suspend {

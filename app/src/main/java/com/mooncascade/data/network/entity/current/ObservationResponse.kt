@@ -1,46 +1,45 @@
 package com.mooncascade.data.network.entity.current
 
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
-@Parcelize
+@Serializable
 data class ObservationResponse(
-    @SerializedName("airpressure")
+    @SerialName("airpressure")
     val airpressure: String?,
-    @SerializedName("airtemperature")
+    @SerialName("airtemperature")
     val airtemperature: String?,
-    @SerializedName("latitude")
+    @SerialName("latitude")
     val latitude: String?,
-    @SerializedName("longitude")
+    @SerialName("longitude")
     val longitude: String?,
-    @SerializedName("name")
+    @SerialName("name")
     val name: String?,
-    @SerializedName("phenomenon")
+    @SerialName("phenomenon")
     val phenomenon: String?,
-    @SerializedName("precipitations")
+    @SerialName("precipitations")
     val precipitations: String?,
-    @SerializedName("relativehumidity")
+    @SerialName("relativehumidity")
     val relativehumidity: String?,
-    @SerializedName("uvindex")
+    @SerialName("uvindex")
     val uvindex: String?,
-    @SerializedName("visibility")
+    @SerialName("visibility")
     val visibility: String?,
-    @SerializedName("waterlevel")
+    @SerialName("waterlevel")
     val waterlevel: String?,
-    @SerializedName("waterlevel_eh2000")
+    @SerialName("waterlevel_eh2000")
     val waterlevelEh2000: String?,
-    @SerializedName("watertemperature")
+    @SerialName("watertemperature")
     val watertemperature: String?,
-    @SerializedName("winddirection")
+    @SerialName("winddirection")
     val winddirection: String?,
-    @SerializedName("windspeed")
+    @SerialName("windspeed")
     val windspeed: String?,
-    @SerializedName("windspeedmax")
+    @SerialName("windspeedmax")
     val windspeedmax: String?,
-    @SerializedName("wmocode")
+    @SerialName("wmocode")
     val wmocode: String?
-) : Parcelable
+)

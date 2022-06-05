@@ -1,20 +1,19 @@
 package com.mooncascade.data.network.entity.forecast
 
 
-import android.os.Parcelable
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
-@Parcelize
+@Serializable
 data class PlaceResponse(
-    @SerializedName("name")
+    @SerialName("name")
     val name: String?,
-    @SerializedName("phenomenon")
+    @SerialName("phenomenon")
     val phenomenon: String?,
-    @SerializedName("tempmax")
-    val tempmax: Int?,
-    @SerializedName("tempmin")
-    val tempmin: Int?
-) : Parcelable
+    @SerialName("tempmax")
+    val tempmax: Double?,
+    @SerialName("tempmin")
+    val tempmin: Double?
+)

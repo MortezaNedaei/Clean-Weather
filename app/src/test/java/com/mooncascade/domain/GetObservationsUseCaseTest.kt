@@ -1,6 +1,5 @@
 package com.mooncascade.domain
 
-import com.google.gson.Gson
 import com.mooncascade.domain.interactor.GetObservationsUseCase
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.domain.model.mock.observationMockData
@@ -9,6 +8,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -25,10 +26,7 @@ class GetObservationsUseCaseTest {
     @Test
     fun `should return observations from ObservationRepository if no error`() {
 
-        val model: List<Observation> =
-            Gson().fromJson(observationMockData, Array<Observation>::class.java)
-                .toList()
-
+        val model = Json.decodeFromString<List<Observation>>(observationMockData)
 
         coEvery { repository.fetchObservations() } returns flowOf(Result.success(model))
 

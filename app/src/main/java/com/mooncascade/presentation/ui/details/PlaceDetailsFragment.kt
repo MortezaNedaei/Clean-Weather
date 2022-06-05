@@ -20,6 +20,7 @@ import com.mooncascade.common.materialContainerTransform
 import com.mooncascade.data.network.service.WeatherApi
 import com.mooncascade.databinding.FragmentPlaceDetailsBinding
 import com.mooncascade.di.qualifier.MainDispatcher
+import com.mooncascade.di.qualifier.MediaBaseUrl
 import com.mooncascade.domain.model.current.Observation
 import com.mooncascade.domain.model.location.Location
 import com.mooncascade.presentation.base.BaseFragment
@@ -50,6 +51,12 @@ class PlaceDetailsFragment : BaseFragment<PlaceDetailsEvent>() {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    @Inject
+    @MediaBaseUrl
+    lateinit var mediaBaseUrl: String
+
+    private val mediaUrl by lazy { mediaBaseUrl.plus(WeatherApi.Endpoints.GET_RANDOM_IMAGE) }
 
     private val args by navArgs<PlaceDetailsFragmentArgs>()
     private val place by lazy(LazyThreadSafetyMode.NONE) { args.item }
@@ -102,7 +109,7 @@ class PlaceDetailsFragment : BaseFragment<PlaceDetailsEvent>() {
 
         with(binding.imgCover) {
             val request = ImageRequest.Builder(context)
-                .data(WeatherApi.Endpoints.GET_RANDOM_IMAGE)
+                .data(mediaUrl)
                 .target(this)
                 .memoryCachePolicy(CachePolicy.DISABLED) // We need to get a new random image currently
                 .build()

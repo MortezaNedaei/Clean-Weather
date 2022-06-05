@@ -1,20 +1,22 @@
 package com.mooncascade.di.network
 
-import com.google.gson.Gson
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.mooncascade.BuildConfig
+import com.mooncascade.di.qualifier.BaseUrl
+import com.mooncascade.di.qualifier.MediaBaseUrl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.ConnectionPool
-import okhttp3.Dispatcher
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -28,8 +30,24 @@ object NetworkModule {
      * Provides base url for [provideRetrofit] method
      */
     @Provides
+    @BaseUrl
     @Singleton
     fun provideBaseUrl() = BuildConfig.API_BASE_URL
+
+    /**
+     * Provides media base url for [provideRetrofit] method
+     */
+    @Provides
+    @MediaBaseUrl
+    @Singleton
+    fun provideMediaBaseUrl() = BuildConfig.API_MEDIA_BASE_URL
+
+    /**
+     * Provides contentType for [provideRetrofit] method
+     */
+    @Provides
+    @Singleton
+    fun provideContentType(): MediaType = "application/json".toMediaType()
 
     /**
      * Provides log level for [provideHttpLoggingInterceptor] method
@@ -104,19 +122,30 @@ object NetworkModule {
     ): MoshiConverterFactory = MoshiConverterFactory.create(moshi)
 
     /**
+     * Provides Kotlinx-SerializationConverterFactory to use in [provideRetrofit] method
+     */
+    @OptIn(ExperimentalSerializationApi::class)
+    @Singleton
+    @Provides
+    fun provideSerializationConverterFactory(
+        contentType: MediaType
+    ): Converter.Factory = Json.asConverterFactory(contentType)
+
+    /**
      * provides Retrofit to use in [ApiServiceModule]
      */
     @Provides
     @Singleton
     fun provideRetrofit(
+        serializationConverterFactory: Converter.Factory,
         moshiConverterFactory: MoshiConverterFactory,
         okHttpClient: OkHttpClient,
-        API_BASE_URL: String
+        @BaseUrl baseUrl: String
     ): Retrofit =
         Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(Gson()))
+            .addConverterFactory(serializationConverterFactory)
             .addConverterFactory(moshiConverterFactory)
-            .baseUrl(API_BASE_URL)
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .build()
 }

@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("kotlinx-serialization")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
 }
@@ -32,6 +33,7 @@ android {
         }
 
         buildConfigField "String", "API_BASE_URL", "${API_BASE_URL}"
+        buildConfigField "String", "API_MEDIA_BASE_URL", "${API_MEDIA_BASE_URL}"
     }
 
     signingConfigs {
@@ -120,10 +122,14 @@ dependencies {
     //region Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofitSerializationVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+    //endregion
+
+    //region Room
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
     //endregion
 
     //region DB

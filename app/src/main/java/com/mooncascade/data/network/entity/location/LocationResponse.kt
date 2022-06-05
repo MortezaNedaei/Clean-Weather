@@ -2,52 +2,54 @@ package com.mooncascade.data.network.entity.location
 
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
+@Serializable
 data class LocationResponse(
-    @SerializedName("cloudbase")
+    @SerialName("cloudbase")
     val cloudbase: String?,
-    @SerializedName("cloudcoverlow")
+    @SerialName("cloudcoverlow")
     val cloudcoverlow: String?,
-    @SerializedName("cloudcovertotal")
+    @SerialName("cloudcovertotal")
     val cloudcovertotal: String?,
-    @SerializedName("cloudtypehigh")
+    @SerialName("cloudtypehigh")
     val cloudtypehigh: String?,
-    @SerializedName("cloudtypelow")
+    @SerialName("cloudtypelow")
     val cloudtypelow: String?,
-    @SerializedName("cloudtypemed")
+    @SerialName("cloudtypemed")
     val cloudtypemed: String?,
-    @SerializedName("code")
+    @SerialName("code")
     val code: String?,
-    @SerializedName("dewpoint")
+    @SerialName("dewpoint")
     val dewpoint: DewpointResponse?,
-    @SerializedName("mode")
+    @SerialName("mode")
     val mode: String?,
-    @SerializedName("name_eng")
+    @SerialName("name_eng")
     val nameEng: String?,
-    @SerializedName("name_est")
+    @SerialName("name_est")
     val nameEst: String?,
-    @SerializedName("precipitations")
+    @SerialName("precipitations")
     val precipitations: PrecipitationsResponse?,
-    @SerializedName("precipitationsperiod")
+    @SerialName("precipitationsperiod")
     val precipitationsperiod: PrecipitationsperiodResponse?,
-    @SerializedName("presentweather")
+    @SerialName("presentweather")
     val presentweather: String?,
-    @SerializedName("pressure")
+    @SerialName("pressure")
     val pressure: PressureResponse?,
-    @SerializedName("pressurechange")
+    @SerialName("pressurechange")
     val pressurechange: PressurechangeResponse?,
-    @SerializedName("pressuretendency")
+    @SerialName("pressuretendency")
     val pressuretendency: String?,
-    @SerializedName("relativehumidity")
+    @SerialName("relativehumidity")
     val relativehumidity: RelativehumidityResponse?,
-    @SerializedName("temperature")
+    @SerialName("temperature")
     val temperature: TemperatureResponse?,
-    @SerializedName("visibility")
+    @SerialName("visibility")
     val visibility: String?,
-    @SerializedName("wind")
+    @SerialName("wind")
     val wind: WindResponse?,
-    @SerializedName("winddirection")
+    @SerialName("winddirection")
     val winddirection: WinddirectionResponse?
 )

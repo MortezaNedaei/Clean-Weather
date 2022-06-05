@@ -2,14 +2,16 @@ package com.mooncascade.data.network.entity.forecast
 
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
+@Serializable
 data class ForecastResponse(
-    @SerializedName("date")
+    @SerialName("date")
     val date: String?,
-    @SerializedName("day")
+    @SerialName("day")
     val day: DayNightResponse?,
-    @SerializedName("night")
+    @SerialName("night")
     val night: DayNightResponse?
 )

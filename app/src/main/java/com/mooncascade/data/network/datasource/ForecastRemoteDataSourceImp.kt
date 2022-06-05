@@ -18,12 +18,6 @@ class ForecastRemoteDataSourceImp @Inject constructor(
 
 
     override suspend fun getForecasts(): Flow<Result<List<Forecast>>> = flow {
-        try {
-            val a = weatherApi.getNextDaysForecasts()
-        } catch (e: Exception) {
-            Log.e(TAG, "getForecasts: ${e.message}")
-            emit(Result.failure(e))
-        }
         val response = getResult { weatherApi.getNextDaysForecasts() }
         response
             .catch { Log.e(TAG, "${it.message}") }

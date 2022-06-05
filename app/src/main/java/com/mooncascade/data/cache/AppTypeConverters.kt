@@ -2,9 +2,10 @@ package com.mooncascade.data.cache
 
 import android.util.Log
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.mooncascade.common.extensions.TAG
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -67,13 +68,13 @@ object AppTypeConverters {
     }
 
     @TypeConverter
-    fun stringToMap(value: String?): Map<String, String>? {
-        return Gson().fromJson(value, object : TypeToken<Map<String, String>?>() {}.type)
+    fun stringToMap(value: String): Map<String, String>? {
+        return Json.decodeFromString(value)
     }
 
     @TypeConverter
     fun mapToString(value: Map<String, String>?): String? {
-        return if (value == null) null else Gson().toJson(value)
+        return if (value == null) null else Json.encodeToString(value)
     }
 
 }

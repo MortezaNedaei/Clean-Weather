@@ -2,24 +2,26 @@ package com.mooncascade.data.network.entity.forecast
 
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
+@Serializable
 data class DayNightResponse(
-    @SerializedName("peipsi")
+    @SerialName("peipsi")
     val peipsi: String?,
-    @SerializedName("phenomenon")
+    @SerialName("phenomenon")
     val phenomenon: String?,
-    @SerializedName("places")
+    @SerialName("places")
     val places: List<PlaceResponse>?,
-    @SerializedName("sea")
+    @SerialName("sea")
     val sea: String?,
-    @SerializedName("tempmax")
-    val tempmax: Int?,
-    @SerializedName("tempmin")
-    val tempmin: Int?,
-    @SerializedName("text")
+    @SerialName("tempmax")
+    val tempmax: Double?,
+    @SerialName("tempmin")
+    val tempmin: Double?,
+    @SerialName("text")
     val text: String?,
-    @SerializedName("winds")
+    @SerialName("winds")
     val winds: List<WindResponse>?
 )

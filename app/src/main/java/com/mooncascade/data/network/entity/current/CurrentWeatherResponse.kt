@@ -1,15 +1,14 @@
 package com.mooncascade.data.network.entity.current
 
-import android.os.Parcelable
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Keep
-@Parcelize
+@Serializable
 data class CurrentWeatherResponse(
-    @SerializedName("timestamp")
+    @SerialName("timestamp")
     val timestamp: String,
-    @SerializedName("observations")
+    @SerialName("observations")
     val observations: List<ObservationResponse>,
-) : Parcelable
+)

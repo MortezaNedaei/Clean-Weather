@@ -4,9 +4,11 @@ package com.mooncascade.domain.model.current
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Keep
 @Parcelize
+@Serializable
 data class Observation(
     val airpressure: String?,
     val airtemperature: String?,

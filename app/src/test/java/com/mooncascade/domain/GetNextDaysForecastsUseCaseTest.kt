@@ -1,6 +1,5 @@
 package com.mooncascade.domain
 
-import com.google.gson.Gson
 import com.mooncascade.domain.interactor.GetNextDaysForecastsUseCase
 import com.mooncascade.domain.model.forecast.Forecast
 import com.mooncascade.domain.model.mock.nextDaysForecastsMockData
@@ -9,6 +8,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -24,9 +25,7 @@ class GetNextDaysForecastsUseCaseTest {
     @Test
     fun `should return next days forecasts from ForecastRepository if no error`() {
 
-        val model: List<Forecast> =
-            Gson().fromJson(nextDaysForecastsMockData, Array<Forecast>::class.java)
-                .toList()
+        val model = Json.decodeFromString<List<Forecast>>(nextDaysForecastsMockData)
 
         coEvery { repository.fetchForecasts() } returns flowOf(Result.success(model))
 

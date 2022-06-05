@@ -7,6 +7,6 @@ import androidx.annotation.Keep
 data class PlaceEntity(
     val name: String?,
     val phenomenon: String?,
-    val tempmax: Int?,
-    val tempmin: Int?
+    val tempmax: Double?,
+    val tempmin: Double?
 )
